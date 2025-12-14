@@ -25,7 +25,7 @@ const badges = [
 
 export default function RewardsScreen() {
   const { colors } = useTheme();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const insets = useSafeAreaInsets();
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
@@ -73,7 +73,7 @@ export default function RewardsScreen() {
     setEarnedBadges(earned);
   };
 
-  const styles = createStyles(colors);
+  const styles = createStyles(colors, isRTL);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
@@ -108,7 +108,7 @@ export default function RewardsScreen() {
                 {earnedBadges.length}
               </Text>
               <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
-                Badges
+                {t('badges')}
               </Text>
             </View>
           </View>
@@ -116,7 +116,7 @@ export default function RewardsScreen() {
 
         {/* Badges Grid */}
         <View style={styles.badgesSection}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Badges</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('badges')}</Text>
           <View style={styles.badgesGrid}>
             {badges.map((badge) => {
               const isEarned = earnedBadges.includes(badge.id);
@@ -156,7 +156,7 @@ export default function RewardsScreen() {
   );
 }
 
-function createStyles(colors: any) {
+function createStyles(colors: any, isRTL: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -172,6 +172,7 @@ function createStyles(colors: any) {
       fontSize: 28,
       fontWeight: 'bold',
       color: '#FFFFFF',
+      textAlign: isRTL ? 'right' : 'left',
     },
     scrollView: {
       flex: 1,
@@ -179,7 +180,7 @@ function createStyles(colors: any) {
       paddingBottom: 20,
     },
     statsContainer: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-around',
       marginHorizontal: 16,
       marginBottom: 24,
@@ -211,9 +212,10 @@ function createStyles(colors: any) {
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 16,
+      textAlign: isRTL ? 'right' : 'left',
     },
     badgesGrid: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-between',
     },

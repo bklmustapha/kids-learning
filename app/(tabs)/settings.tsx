@@ -19,7 +19,7 @@ type Theme = 'light' | 'dark' | 'system';
 
 export default function SettingsScreen() {
   const { colors, theme, setTheme, isDark } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t, isRTL } = useLanguage();
   const insets = useSafeAreaInsets();
   const [settings, setSettings] = useState<AppSettings>({
     soundEnabled: true,
@@ -95,7 +95,7 @@ export default function SettingsScreen() {
     );
   };
 
-  const styles = createStyles(colors);
+  const styles = createStyles(colors, isRTL);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
@@ -157,9 +157,9 @@ export default function SettingsScreen() {
 
         {/* Sound Settings */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Sound & Audio</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('soundAudio')}</Text>
           <View style={styles.settingRow}>
-            <Text style={[styles.settingLabel, { color: colors.text }]}>Sound Effects</Text>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>{t('soundEffects')}</Text>
             <Switch
               value={settings.soundEnabled}
               onValueChange={handleToggleSound}
@@ -168,7 +168,7 @@ export default function SettingsScreen() {
             />
           </View>
           <View style={styles.settingRow}>
-            <Text style={[styles.settingLabel, { color: colors.text }]}>Screen Time Reminder</Text>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>{t('screenTimeReminder')}</Text>
             <Switch
               value={settings.screenTimeReminder}
               onValueChange={handleToggleReminder}
@@ -180,12 +180,12 @@ export default function SettingsScreen() {
 
         {/* Data Section */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Data</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('data')}</Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colors.error }]}
             onPress={handleResetProgress}
           >
-            <Text style={styles.actionButtonText}>Reset All Progress</Text>
+            <Text style={styles.actionButtonText}>{t('resetAllProgress')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -213,7 +213,7 @@ export default function SettingsScreen() {
   );
 }
 
-function createStyles(colors: any) {
+function createStyles(colors: any, isRTL: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -229,6 +229,7 @@ function createStyles(colors: any) {
       fontSize: 28,
       fontWeight: 'bold',
       color: '#FFFFFF',
+      textAlign: isRTL ? 'right' : 'left',
     },
     scrollView: {
       flex: 1,
@@ -250,9 +251,10 @@ function createStyles(colors: any) {
       fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 16,
+      textAlign: isRTL ? 'right' : 'left',
     },
     optionsContainer: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       gap: 12,
     },
     optionButton: {
@@ -268,7 +270,7 @@ function createStyles(colors: any) {
       fontWeight: '600',
     },
     settingRow: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingVertical: 12,
@@ -277,6 +279,7 @@ function createStyles(colors: any) {
     },
     settingLabel: {
       fontSize: 16,
+      textAlign: isRTL ? 'right' : 'left',
     },
     actionButton: {
       paddingVertical: 14,

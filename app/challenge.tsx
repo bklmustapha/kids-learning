@@ -18,6 +18,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { saveProgress, getProgress } from '@/utils/storage';
 import { getItemAudio } from '@/utils/audioAssets';
+import { getItemName, getLevelTitle } from '@/utils/translations';
 import { LearningItem, ChallengeQuestion } from '@/types';
 
 const { width } = Dimensions.get('window');
@@ -46,19 +47,25 @@ export default function ChallengeScreen() {
   const loadLevel = () => {
     const level = getLevelById(levelId);
     if (level) {
-      // Get language-specific audio for items
+      // Get language-specific audio and names for items
       const itemsWithAudio = level.items.map(item => {
+        const updatedItem = { ...item };
+        
+        // Get language-specific name
+        updatedItem.name = getItemName(item.id, language as 'en' | 'fr' | 'ar');
+        
         // For numbers category, get language-specific audio
         if (level.category === 'numbers') {
           const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
           if (languageAudio) {
-            return { ...item, sound: languageAudio };
+            updatedItem.sound = languageAudio;
           }
         }
-        return item;
+        return updatedItem;
       });
       setItems(itemsWithAudio);
-      setLevelTitle(level.title);
+      // Use translated level title
+      setLevelTitle(getLevelTitle(levelId, language as 'en' | 'fr' | 'ar'));
       generateQuestions(itemsWithAudio);
     }
   };
@@ -118,8 +125,8 @@ export default function ChallengeScreen() {
         id: `q${index}`,
         type,
         question: type === 'multiple-choice' 
-          ? `Which one is ${randomItem.name}?`
-          : `Tap the ${randomItem.name}!`,
+          ? `${t('whichOne')} ${randomItem.name}?`
+          : `${t('tapThe')} ${randomItem.name}!`,
         correctAnswer: randomItem.id,
         options: allOptions.map(item => item.id),
         audio: audioSource,

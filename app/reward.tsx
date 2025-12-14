@@ -10,6 +10,8 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Button } from '@/components/Button';
 import { getLevelById } from '@/data/levels';
 import { getProgress, saveProgress } from '@/utils/storage';
+import { getLevelTitle } from '@/utils/translations';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { playSuccessSound } from '@/utils/soundManager';
 
 export default function RewardScreen() {
@@ -18,6 +20,7 @@ export default function RewardScreen() {
   const levelId = params.levelId as string;
   const starsEarned = parseInt(params.stars || '1', 10);
   const score = parseInt(params.score || '0', 10);
+  const { t, language, isRTL } = useLanguage();
   const [levelTitle, setLevelTitle] = useState('');
   const [confettiAnim] = useState(new Animated.Value(0));
   const [starsAnim] = useState([
@@ -30,12 +33,12 @@ export default function RewardScreen() {
     loadLevel();
     animateRewards();
     playSuccessSound();
-  }, []);
+  }, [language]);
 
   const loadLevel = () => {
     const level = getLevelById(levelId);
     if (level) {
-      setLevelTitle(level.title);
+      setLevelTitle(getLevelTitle(levelId, language as 'en' | 'fr' | 'ar'));
       saveLevelProgress(level);
     }
   };
@@ -109,9 +112,9 @@ export default function RewardScreen() {
 
       {/* Main Content */}
       <View style={styles.contentContainer}>
-        <Text style={styles.congratulations}>Congratulations! 🎊</Text>
+        <Text style={styles.congratulations}>{t('congratulations')} 🎊</Text>
         <Text style={styles.levelTitle}>{levelTitle}</Text>
-        <Text style={styles.completedText}>Level Completed!</Text>
+        <Text style={styles.completedText}>{t('levelCompleted')}</Text>
 
         {/* Stars */}
         <View style={styles.starsContainer}>
@@ -141,21 +144,25 @@ export default function RewardScreen() {
 
         {/* Score */}
         <View style={styles.scoreContainer}>
-          <Text style={styles.scoreText}>You got {score} out of 5 correct!</Text>
-          <Text style={styles.starsText}>Earned {starsEarned} stars! ⭐</Text>
+          <Text style={styles.scoreText}>
+            {t('youGot')} {score} {t('outOf')} 5 {t('correct')}!
+          </Text>
+          <Text style={styles.starsText}>
+            {t('earned')} {starsEarned} {t('stars')}! ⭐
+          </Text>
         </View>
 
         {/* Badge */}
         <View style={styles.badgeContainer}>
           <Text style={styles.badgeIcon}>🏆</Text>
-          <Text style={styles.badgeText}>Great Job!</Text>
+          <Text style={styles.badgeText}>{t('greatJob')}</Text>
         </View>
       </View>
 
       {/* Continue Button */}
       <View style={styles.buttonContainer}>
         <Button
-          title="Continue Learning →"
+          title={t('continue') + ` ${isRTL ? '←' : '→'}`}
           onPress={handleContinue}
           variant="success"
         />

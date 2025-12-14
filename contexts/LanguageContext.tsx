@@ -51,6 +51,7 @@ const translations: Translations = {
   numbers: { en: 'Numbers', fr: 'Nombres', ar: 'الأرقام' },
   colors: { en: 'Colors', fr: 'Couleurs', ar: 'الألوان' },
   shapes: { en: 'Shapes', fr: 'Formes', ar: 'الأشكال' },
+  soundAudio: { en: 'Sound & Audio', fr: 'Son et audio', ar: 'الصوت والصوتيات' },
   soundEffects: { en: 'Sound Effects', fr: 'Effets sonores', ar: 'التأثيرات الصوتية' },
   screenTimeReminder: { en: 'Screen Time Reminder', fr: 'Rappel de temps d\'écran', ar: 'تذكير وقت الشاشة' },
   data: { en: 'Data', fr: 'Données', ar: 'البيانات' },
@@ -63,6 +64,45 @@ const translations: Translations = {
   tapCorrectAnswer: { en: 'Tap the correct answer!', fr: 'Appuyez sur la bonne réponse!', ar: 'اضغط على الإجابة الصحيحة!' },
   whichOne: { en: 'Which one is', fr: 'Lequel est', ar: 'أي واحد هو' },
   tapThe: { en: 'Tap the', fr: 'Appuyez sur le', ar: 'اضغط على' },
+  chooseLevel: { en: 'Choose a level to start learning!', fr: 'Choisissez un niveau pour commencer!', ar: 'اختر مستوى للبدء!' },
+  youGot: { en: 'You got', fr: 'Vous avez obtenu', ar: 'حصلت على' },
+  outOf: { en: 'out of', fr: 'sur', ar: 'من' },
+  // Level titles
+  farmAnimals: { en: 'Farm Animals', fr: 'Animaux de la ferme', ar: 'حيوانات المزرعة' },
+  wildAnimals: { en: 'Wild Animals', fr: 'Animaux sauvages', ar: 'الحيوانات البرية' },
+  lettersAE: { en: 'Letters A-E', fr: 'Lettres A-E', ar: 'الحروف أ-ه' },
+  numbers15: { en: 'Numbers 1-5', fr: 'Nombres 1-5', ar: 'الأرقام 1-5' },
+  basicColors: { en: 'Basic Colors', fr: 'Couleurs de base', ar: 'الألوان الأساسية' },
+  basicShapes: { en: 'Basic Shapes', fr: 'Formes de base', ar: 'الأشكال الأساسية' },
+  // Item names - Numbers
+  one: { en: 'One', fr: 'Un', ar: 'واحد' },
+  two: { en: 'Two', fr: 'Deux', ar: 'اثنان' },
+  three: { en: 'Three', fr: 'Trois', ar: 'ثلاثة' },
+  four: { en: 'Four', fr: 'Quatre', ar: 'أربعة' },
+  five: { en: 'Five', fr: 'Cinq', ar: 'خمسة' },
+  // Item names - Animals
+  cow: { en: 'Cow', fr: 'Vache', ar: 'بقرة' },
+  pig: { en: 'Pig', fr: 'Cochon', ar: 'خنزير' },
+  chicken: { en: 'Chicken', fr: 'Poulet', ar: 'دجاجة' },
+  sheep: { en: 'Sheep', fr: 'Mouton', ar: 'خروف' },
+  horse: { en: 'Horse', fr: 'Cheval', ar: 'حصان' },
+  lion: { en: 'Lion', fr: 'Lion', ar: 'أسد' },
+  elephant: { en: 'Elephant', fr: 'Éléphant', ar: 'فيل' },
+  tiger: { en: 'Tiger', fr: 'Tigre', ar: 'نمر' },
+  bear: { en: 'Bear', fr: 'Ours', ar: 'دب' },
+  monkey: { en: 'Monkey', fr: 'Singe', ar: 'قرد' },
+  // Item names - Colors
+  red: { en: 'Red', fr: 'Rouge', ar: 'أحمر' },
+  blue: { en: 'Blue', fr: 'Bleu', ar: 'أزرق' },
+  yellow: { en: 'Yellow', fr: 'Jaune', ar: 'أصفر' },
+  green: { en: 'Green', fr: 'Vert', ar: 'أخضر' },
+  orange: { en: 'Orange', fr: 'Orange', ar: 'برتقالي' },
+  // Item names - Shapes
+  circle: { en: 'Circle', fr: 'Cercle', ar: 'دائرة' },
+  square: { en: 'Square', fr: 'Carré', ar: 'مربع' },
+  triangle: { en: 'Triangle', fr: 'Triangle', ar: 'مثلث' },
+  rectangle: { en: 'Rectangle', fr: 'Rectangle', ar: 'مستطيل' },
+  star: { en: 'Star', fr: 'Étoile', ar: 'نجمة' },
 };
 
 interface LanguageContextType {

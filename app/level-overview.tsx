@@ -11,6 +11,8 @@ import { Button } from '@/components/Button';
 import { LevelCard } from '@/components/LevelCard';
 import { getLevelsByCategory, getLevelById } from '@/data/levels';
 import { getProgress } from '@/utils/storage';
+import { getLevelTitle } from '@/utils/translations';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Category, Level, UserProgress } from '@/types';
 
 const categoryInfo: Record<Category, { title: string; icon: string }> = {
@@ -25,12 +27,13 @@ export default function LevelOverviewScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ category: Category }>();
   const category = params.category as Category;
+  const { t, language, isRTL } = useLanguage();
   const [levels, setLevels] = useState<Level[]>([]);
   const [progress, setProgress] = useState<UserProgress | null>(null);
 
   useEffect(() => {
     loadData();
-  }, [category]);
+  }, [category, language]);
 
   const loadData = async () => {
     const categoryLevels = getLevelsByCategory(category);
@@ -61,16 +64,31 @@ export default function LevelOverviewScreen() {
     router.back();
   };
 
-  const categoryData = categoryInfo[category] || { title: 'Category', icon: '📚' };
+  const getCategoryIcon = (cat: Category): string => {
+    const icons: Record<Category, string> = {
+      animals: '🐶',
+      letters: '🔤',
+      numbers: '🔢',
+      colors: '🎨',
+      shapes: '🔺',
+    };
+    return icons[cat] || '📚';
+  };
+
+  const getCategoryTitle = (cat: Category): string => {
+    return t(cat);
+  };
+
+  const styles = createStyles(isRTL);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.categoryIcon}>{categoryData.icon}</Text>
-          <Text style={styles.categoryTitle}>{categoryData.title}</Text>
-          <Text style={styles.subtitle}>Choose a level to start learning!</Text>
+          <Text style={styles.categoryIcon}>{getCategoryIcon(category)}</Text>
+          <Text style={styles.categoryTitle}>{getCategoryTitle(category)}</Text>
+          <Text style={styles.subtitle}>{t('chooseLevel')}</Text>
         </View>
 
         {/* Levels Grid */}
@@ -83,7 +101,7 @@ export default function LevelOverviewScreen() {
               <LevelCard
                 key={level.id}
                 levelNumber={level.levelNumber}
-                title={level.title}
+                title={getLevelTitle(level.id, language as 'en' | 'fr' | 'ar')}
                 unlocked={level.unlocked}
                 stars={levelStars}
                 onPress={() => handleLevelPress(level.id)}
@@ -94,52 +112,54 @@ export default function LevelOverviewScreen() {
 
         {/* Back Button */}
         <View style={styles.buttonContainer}>
-          <Button title="← Back to Home" onPress={handleBack} variant="secondary" />
+          <Button title={`${isRTL ? '→' : '←'} ${t('back')}`} onPress={handleBack} variant="secondary" />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  header: {
-    backgroundColor: '#4A90E2',
-    padding: 30,
-    alignItems: 'center',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  categoryIcon: {
-    fontSize: 64,
-    marginBottom: 10,
-  },
-  categoryTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
-  },
-  levelsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    padding: 15,
-  },
-  buttonContainer: {
-    padding: 20,
-    marginBottom: 20,
-  },
-});
+function createStyles(isRTL: boolean) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#F5F5F5',
+    },
+    scrollView: {
+      flex: 1,
+    },
+    header: {
+      backgroundColor: '#4A90E2',
+      padding: 30,
+      alignItems: 'center',
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
+    },
+    categoryIcon: {
+      fontSize: 64,
+      marginBottom: 10,
+    },
+    categoryTitle: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: '#FFFFFF',
+      marginBottom: 8,
+    },
+    subtitle: {
+      fontSize: 16,
+      color: '#FFFFFF',
+      opacity: 0.9,
+    },
+    levelsContainer: {
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      padding: 15,
+    },
+    buttonContainer: {
+      padding: 20,
+      marginBottom: 20,
+    },
+  });
+}
 

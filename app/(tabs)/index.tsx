@@ -14,6 +14,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getProgress } from '@/utils/storage';
 import { getLevelsByCategory, levels } from '@/data/levels';
+import { getLevelTitle } from '@/utils/translations';
 import { UserProgress, Category } from '@/types';
 
 const { width } = Dimensions.get('window');
@@ -21,7 +22,7 @@ const { width } = Dimensions.get('window');
 export default function HomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { t } = useLanguage();
+  const { t, language, isRTL } = useLanguage();
   const insets = useSafeAreaInsets();
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [currentLevel, setCurrentLevel] = useState<any>(null);
@@ -62,7 +63,7 @@ export default function HomeScreen() {
     }
   };
 
-  const styles = createStyles(colors);
+  const styles = createStyles(colors, isRTL);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
@@ -71,7 +72,7 @@ export default function HomeScreen() {
         <View style={[styles.header, { backgroundColor: colors.primary }]}>
           <View style={styles.headerContent}>
             <View style={styles.greetingContainer}>
-              <Ionicons name="hand-left" size={24} color="#FFFFFF" />
+              <Ionicons name={isRTL ? "hand-right" : "hand-left"} size={24} color="#FFFFFF" />
               <Text style={styles.greeting}> {t('home')}</Text>
             </View>
             <View style={styles.starBadge}>
@@ -97,10 +98,10 @@ export default function HomeScreen() {
               </View>
               <View style={styles.levelDetails}>
                 <Text style={[styles.levelName, { color: colors.text }]}>
-                  {currentLevel.title}
+                  {getLevelTitle(currentLevel.id, language as 'en' | 'fr' | 'ar')}
                 </Text>
                 <Text style={[styles.levelCategory, { color: colors.textSecondary }]}>
-                  {getCategoryName(currentLevel.category)}
+                  {t(currentLevel.category)}
                 </Text>
               </View>
             </View>
@@ -148,7 +149,7 @@ export default function HomeScreen() {
               <Ionicons name="trophy" size={40} color={colors.warning} />
               <View style={styles.rewardDetails}>
                 <Text style={[styles.rewardName, { color: colors.text }]}>
-                  {lastReward.title}
+                  {getLevelTitle(lastReward.id, language as 'en' | 'fr' | 'ar')}
                 </Text>
                 <Text style={[styles.rewardDate, { color: colors.textSecondary }]}>
                   {t('completed')}
@@ -191,18 +192,7 @@ function getCategoryIcon(category: Category): keyof typeof Ionicons.glyphMap {
   return icons[category] || 'library';
 }
 
-function getCategoryName(category: Category): string {
-  const names: Record<Category, string> = {
-    animals: 'Animals',
-    letters: 'Letters',
-    numbers: 'Numbers',
-    colors: 'Colors',
-    shapes: 'Shapes',
-  };
-  return names[category];
-}
-
-function createStyles(colors: any) {
+function createStyles(colors: any, isRTL: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -219,12 +209,12 @@ function createStyles(colors: any) {
       borderBottomRightRadius: 30,
     },
     headerContent: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
     greetingContainer: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
     },
     greeting: {
@@ -233,7 +223,7 @@ function createStyles(colors: any) {
       color: '#FFFFFF',
     },
     starBadge: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
       paddingHorizontal: 16,
@@ -260,9 +250,10 @@ function createStyles(colors: any) {
       fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 16,
+      textAlign: isRTL ? 'right' : 'left',
     },
     levelInfo: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       marginBottom: 16,
     },
@@ -273,7 +264,8 @@ function createStyles(colors: any) {
       backgroundColor: colors.primary + '20',
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: 16,
+      marginRight: isRTL ? 0 : 16,
+      marginLeft: isRTL ? 16 : 0,
     },
     levelDetails: {
       flex: 1,
@@ -282,9 +274,11 @@ function createStyles(colors: any) {
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 4,
+      textAlign: isRTL ? 'right' : 'left',
     },
     levelCategory: {
       fontSize: 14,
+      textAlign: isRTL ? 'right' : 'left',
     },
     continueButton: {
       paddingVertical: 14,
@@ -298,7 +292,7 @@ function createStyles(colors: any) {
       fontWeight: 'bold',
     },
     progressStats: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-around',
     },
     statItem: {
@@ -313,7 +307,7 @@ function createStyles(colors: any) {
       fontSize: 14,
     },
     rewardInfo: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       gap: 16,
     },
@@ -324,12 +318,14 @@ function createStyles(colors: any) {
       fontSize: 18,
       fontWeight: '600',
       marginBottom: 4,
+      textAlign: isRTL ? 'right' : 'left',
     },
     rewardDate: {
       fontSize: 14,
+      textAlign: isRTL ? 'right' : 'left',
     },
     quickActions: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-around',
       paddingHorizontal: 16,
       paddingBottom: 20,

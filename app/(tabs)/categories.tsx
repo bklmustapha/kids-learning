@@ -15,18 +15,18 @@ import { getProgress } from '@/utils/storage';
 import { getLevelsByCategory } from '@/data/levels';
 import { Category, UserProgress } from '@/types';
 
-const categories: { category: Category; title: string; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
-  { category: 'animals', title: 'Animals', icon: 'paw', color: '#FF6B6B' },
-  { category: 'letters', title: 'Letters', icon: 'text', color: '#4ECDC4' },
-  { category: 'numbers', title: 'Numbers', icon: 'calculator', color: '#45B7D1' },
-  { category: 'colors', title: 'Colors', icon: 'color-palette', color: '#FFA07A' },
-  { category: 'shapes', title: 'Shapes', icon: 'shapes', color: '#98D8C8' },
+const categories: { category: Category; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
+  { category: 'animals', icon: 'paw', color: '#FF6B6B' },
+  { category: 'letters', icon: 'text', color: '#4ECDC4' },
+  { category: 'numbers', icon: 'calculator', color: '#45B7D1' },
+  { category: 'colors', icon: 'color-palette', color: '#FFA07A' },
+  { category: 'shapes', icon: 'shapes', color: '#98D8C8' },
 ];
 
 export default function CategoriesScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const insets = useSafeAreaInsets();
   const [progress, setProgress] = useState<UserProgress | null>(null);
 
@@ -48,7 +48,7 @@ export default function CategoriesScreen() {
     });
   };
 
-  const styles = createStyles(colors);
+  const styles = createStyles(colors, isRTL);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
@@ -80,7 +80,7 @@ export default function CategoriesScreen() {
                 </View>
                 <View style={styles.categoryInfo}>
                   <Text style={[styles.categoryTitle, { color: colors.text }]}>
-                    {cat.title}
+                    {t(cat.category)}
                   </Text>
                   <Text style={[styles.categorySubtitle, { color: colors.textSecondary }]}>
                     {categoryProgress.completed} / {categoryProgress.total} {t('completed')}
@@ -97,7 +97,11 @@ export default function CategoriesScreen() {
                 <View
                   style={[
                     styles.progressFill,
-                    { width: `${progressPercent}%`, backgroundColor: cat.color },
+                    { 
+                      width: `${progressPercent}%`, 
+                      backgroundColor: cat.color,
+                      alignSelf: isRTL ? 'flex-end' : 'flex-start',
+                    },
                   ]}
                 />
               </View>
@@ -109,7 +113,7 @@ export default function CategoriesScreen() {
   );
 }
 
-function createStyles(colors: any) {
+function createStyles(colors: any, isRTL: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -125,6 +129,7 @@ function createStyles(colors: any) {
       fontSize: 28,
       fontWeight: 'bold',
       color: '#FFFFFF',
+      textAlign: isRTL ? 'right' : 'left',
     },
     scrollView: {
       flex: 1,
@@ -143,7 +148,7 @@ function createStyles(colors: any) {
       elevation: 3,
     },
     categoryHeader: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       marginBottom: 12,
     },
@@ -153,7 +158,8 @@ function createStyles(colors: any) {
       borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: 16,
+      marginRight: isRTL ? 0 : 16,
+      marginLeft: isRTL ? 16 : 0,
     },
     categoryIcon: {
       fontSize: 30,
@@ -165,12 +171,14 @@ function createStyles(colors: any) {
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 4,
+      textAlign: isRTL ? 'right' : 'left',
     },
     categorySubtitle: {
       fontSize: 14,
+      textAlign: isRTL ? 'right' : 'left',
     },
     starsContainer: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       gap: 4,
     },
