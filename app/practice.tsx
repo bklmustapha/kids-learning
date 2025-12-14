@@ -58,8 +58,8 @@ export default function PracticeScreen() {
         // Get language-specific name
         updatedItem.name = getItemName(item.id, language as 'en' | 'fr' | 'ar');
         
-        // For numbers and animals categories, get language-specific audio
-        if (level.category === 'numbers' || level.category === 'animals') {
+        // For numbers, animals, and colors categories, get language-specific audio
+        if (level.category === 'numbers' || level.category === 'animals' || level.category === 'colors') {
           const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
           if (languageAudio) {
             updatedItem.sound = languageAudio;

@@ -1,4 +1,4 @@
-// Audio assets mapping for numbers and animals by language
+// Audio assets mapping for numbers, animals, and colors by language
 type Language = 'en' | 'fr' | 'ar';
 
 // Import all number audio files
@@ -94,6 +94,49 @@ const animalAudios: Record<Language, Record<string, number>> = {
   },
 };
 
+// Import all color audio files
+const colorAudios: Record<Language, Record<string, number>> = {
+  en: {
+    'red': require('@/assets/colors/en/red.mp3'),
+    'blue': require('@/assets/colors/en/blue.mp3'),
+    'yellow': require('@/assets/colors/en/yellow.mp3'),
+    'green': require('@/assets/colors/en/green.mp3'),
+    'orange': require('@/assets/colors/en/orange.mp3'),
+    'purple': require('@/assets/colors/en/purple.mp3'),
+    'pink': require('@/assets/colors/en/pink.mp3'),
+    'brown': require('@/assets/colors/en/brown.mp3'),
+    'black': require('@/assets/colors/en/black.mp3'),
+    'white': require('@/assets/colors/en/white.mp3'),
+    'gray': require('@/assets/colors/en/gray.mp3'),
+  },
+  fr: {
+    'red': require('@/assets/colors/fr/red.mp3'),
+    'blue': require('@/assets/colors/fr/blue.mp3'),
+    'yellow': require('@/assets/colors/fr/yellow.mp3'),
+    'green': require('@/assets/colors/fr/green.mp3'),
+    'orange': require('@/assets/colors/fr/orange.mp3'),
+    'purple': require('@/assets/colors/fr/purple.mp3'),
+    'pink': require('@/assets/colors/fr/pink.mp3'),
+    'brown': require('@/assets/colors/fr/brown.mp3'),
+    'black': require('@/assets/colors/fr/black.mp3'),
+    'white': require('@/assets/colors/fr/white.mp3'),
+    'gray': require('@/assets/colors/fr/gray.mp3'),
+  },
+  ar: {
+    'red': require('@/assets/colors/ar/red.mp3'),
+    'blue': require('@/assets/colors/ar/blue.mp3'),
+    'yellow': require('@/assets/colors/ar/yellow.mp3'),
+    'green': require('@/assets/colors/ar/green.mp3'),
+    'orange': require('@/assets/colors/ar/orange.mp3'),
+    'purple': require('@/assets/colors/ar/purple.mp3'),
+    'pink': require('@/assets/colors/ar/pink.mp3'),
+    'brown': require('@/assets/colors/ar/brown.mp3'),
+    'black': require('@/assets/colors/ar/black.mp3'),
+    'white': require('@/assets/colors/ar/white.mp3'),
+    'gray': require('@/assets/colors/ar/gray.mp3'),
+  },
+};
+
 /**
  * Get the audio file for a number item based on language
  * @param itemId - The item ID (e.g., '1', '2', '3')
@@ -115,9 +158,19 @@ export const getAnimalAudio = (itemId: string, language: Language = 'en'): numbe
 };
 
 /**
+ * Get the audio file for a color item based on language
+ * @param itemId - The item ID (e.g., 'red', 'blue', 'purple')
+ * @param language - The current language ('en', 'fr', 'ar')
+ * @returns The require() result (number) for the audio file, or undefined if not found
+ */
+export const getColorAudio = (itemId: string, language: Language = 'en'): number | undefined => {
+  return colorAudios[language]?.[itemId];
+};
+
+/**
  * Get audio file for any learning item based on category and language
  * @param itemId - The item ID
- * @param category - The category (e.g., 'numbers', 'animals')
+ * @param category - The category (e.g., 'numbers', 'animals', 'colors')
  * @param language - The current language
  * @returns The require() result (number) for the audio file, or undefined if not found
  */
@@ -131,6 +184,9 @@ export const getItemAudio = (
   }
   if (category === 'animals') {
     return getAnimalAudio(itemId, language);
+  }
+  if (category === 'colors') {
+    return getColorAudio(itemId, language);
   }
   // Add other categories here as needed
   return undefined;
