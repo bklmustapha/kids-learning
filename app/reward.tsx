@@ -91,6 +91,18 @@ export default function RewardScreen() {
       if (category === 'shapes' && newCategoryCompleted >= 1 && !newBadges.includes('shape-genius')) {
         newBadges.push('shape-genius');
       }
+      if (category === 'countries' && newCategoryCompleted >= 1 && !newBadges.includes('country-explorer')) {
+        newBadges.push('country-explorer');
+      }
+      if (category === 'fruits' && newCategoryCompleted >= 1 && !newBadges.includes('fruit-master')) {
+        newBadges.push('fruit-master');
+      }
+      if (category === 'sports' && newCategoryCompleted >= 1 && !newBadges.includes('sport-champion')) {
+        newBadges.push('sport-champion');
+      }
+      if (category === 'vehicles' && newCategoryCompleted >= 1 && !newBadges.includes('vehicle-driver')) {
+        newBadges.push('vehicle-driver');
+      }
       
       // Star collector badges
       if (newTotalStars >= 10 && !newBadges.includes('star-collector')) {

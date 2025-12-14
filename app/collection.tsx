@@ -61,6 +61,18 @@ export default function CollectionScreen() {
     if (userProgress.categoryProgress.shapes.completed >= 1) {
       earned.push('shape-genius');
     }
+    if (userProgress.categoryProgress.countries.completed >= 1) {
+      earned.push('country-explorer');
+    }
+    if (userProgress.categoryProgress.fruits.completed >= 1) {
+      earned.push('fruit-master');
+    }
+    if (userProgress.categoryProgress.sports.completed >= 1) {
+      earned.push('sport-champion');
+    }
+    if (userProgress.categoryProgress.vehicles.completed >= 1) {
+      earned.push('vehicle-driver');
+    }
 
     // Star badges
     if (userProgress.stars >= 10) {

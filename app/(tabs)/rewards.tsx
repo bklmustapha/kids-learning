@@ -18,6 +18,10 @@ const badgeConfig = [
   { id: 'number-whiz', nameKey: 'badgeNumberWhiz', descKey: 'badgeDescNumberWhiz', icon: 'calculator' as keyof typeof Ionicons.glyphMap },
   { id: 'color-artist', nameKey: 'badgeColorArtist', descKey: 'badgeDescColorArtist', icon: 'color-palette' as keyof typeof Ionicons.glyphMap },
   { id: 'shape-genius', nameKey: 'badgeShapeGenius', descKey: 'badgeDescShapeGenius', icon: 'shapes' as keyof typeof Ionicons.glyphMap },
+  { id: 'country-explorer', nameKey: 'badgeCountryExplorer', descKey: 'badgeDescCountryExplorer', icon: 'globe' as keyof typeof Ionicons.glyphMap },
+  { id: 'fruit-master', nameKey: 'badgeFruitMaster', descKey: 'badgeDescFruitMaster', icon: 'nutrition' as keyof typeof Ionicons.glyphMap },
+  { id: 'sport-champion', nameKey: 'badgeSportChampion', descKey: 'badgeDescSportChampion', icon: 'football' as keyof typeof Ionicons.glyphMap },
+  { id: 'vehicle-driver', nameKey: 'badgeVehicleDriver', descKey: 'badgeDescVehicleDriver', icon: 'car' as keyof typeof Ionicons.glyphMap },
   { id: 'star-collector', nameKey: 'badgeStarCollector', descKey: 'badgeDescStarCollector', icon: 'star-outline' as keyof typeof Ionicons.glyphMap },
   { id: 'super-learner', nameKey: 'badgeSuperLearner', descKey: 'badgeDescSuperLearner', icon: 'trophy' as keyof typeof Ionicons.glyphMap },
 ];
@@ -65,6 +69,18 @@ export default function RewardsScreen() {
     }
     if (userProgress.categoryProgress.shapes.completed >= 1) {
       earned.push('shape-genius');
+    }
+    if (userProgress.categoryProgress.countries.completed >= 1) {
+      earned.push('country-explorer');
+    }
+    if (userProgress.categoryProgress.fruits.completed >= 1) {
+      earned.push('fruit-master');
+    }
+    if (userProgress.categoryProgress.sports.completed >= 1) {
+      earned.push('sport-champion');
+    }
+    if (userProgress.categoryProgress.vehicles.completed >= 1) {
+      earned.push('vehicle-driver');
     }
     if (userProgress.stars >= 10) {
       earned.push('star-collector');
