@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface LevelCardProps {
   levelNumber: number;
@@ -7,6 +9,7 @@ interface LevelCardProps {
   unlocked: boolean;
   stars?: number;
   onPress: () => void;
+  isRTL?: boolean;
 }
 
 export const LevelCard: React.FC<LevelCardProps> = ({
@@ -15,7 +18,10 @@ export const LevelCard: React.FC<LevelCardProps> = ({
   unlocked,
   stars = 0,
   onPress,
+  isRTL = false,
 }) => {
+  const { t } = useLanguage();
+  
   return (
     <TouchableOpacity
       style={[styles.card, !unlocked && styles.lockedCard]}
@@ -25,20 +31,22 @@ export const LevelCard: React.FC<LevelCardProps> = ({
     >
       {!unlocked && (
         <View style={styles.lockOverlay}>
-          <Text style={styles.lockIcon}>🔒</Text>
+          <Ionicons name="lock-closed" size={48} color="#999" />
         </View>
       )}
-      <Text style={styles.levelNumber}>Level {levelNumber}</Text>
+      <Text style={styles.levelNumber}>
+        {isRTL ? `${levelNumber} ${t('level')}` : `${t('level')} ${levelNumber}`}
+      </Text>
       <Text style={styles.title}>{title}</Text>
       {unlocked && stars > 0 && (
-        <View style={styles.starsContainer}>
+        <View style={[styles.starsContainer, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
           {[1, 2, 3].map((star) => (
-            <Text
+            <Ionicons
               key={star}
-              style={[styles.star, star <= stars && styles.starFilled]}
-            >
-              ⭐
-            </Text>
+              name={star <= stars ? 'star' : 'star-outline'}
+              size={20}
+              color="#FFD700"
+            />
           ))}
         </View>
       )}
@@ -74,9 +82,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  lockIcon: {
-    fontSize: 48,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 16,
   },
   levelNumber: {
     fontSize: 16,
