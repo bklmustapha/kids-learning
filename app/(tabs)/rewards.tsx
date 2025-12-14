@@ -12,15 +12,15 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { getProgress } from '@/utils/storage';
 import { UserProgress } from '@/types';
 
-const badges = [
-  { id: 'first-star', name: 'First Star', icon: 'star' as keyof typeof Ionicons.glyphMap, description: 'Complete your first level' },
-  { id: 'animal-expert', name: 'Animal Expert', icon: 'paw' as keyof typeof Ionicons.glyphMap, description: 'Complete all animal levels' },
-  { id: 'letter-master', name: 'Letter Master', icon: 'text' as keyof typeof Ionicons.glyphMap, description: 'Complete all letter levels' },
-  { id: 'number-whiz', name: 'Number Whiz', icon: 'calculator' as keyof typeof Ionicons.glyphMap, description: 'Complete all number levels' },
-  { id: 'color-artist', name: 'Color Artist', icon: 'color-palette' as keyof typeof Ionicons.glyphMap, description: 'Complete all color levels' },
-  { id: 'shape-genius', name: 'Shape Genius', icon: 'shapes' as keyof typeof Ionicons.glyphMap, description: 'Complete all shape levels' },
-  { id: 'star-collector', name: 'Star Collector', icon: 'star-outline' as keyof typeof Ionicons.glyphMap, description: 'Collect 10 stars' },
-  { id: 'super-learner', name: 'Super Learner', icon: 'trophy' as keyof typeof Ionicons.glyphMap, description: 'Collect 25 stars' },
+const badgeConfig = [
+  { id: 'first-star', nameKey: 'badgeFirstStar', descKey: 'badgeDescFirstStar', icon: 'star' as keyof typeof Ionicons.glyphMap },
+  { id: 'animal-expert', nameKey: 'badgeAnimalExpert', descKey: 'badgeDescAnimalExpert', icon: 'paw' as keyof typeof Ionicons.glyphMap },
+  { id: 'letter-master', nameKey: 'badgeLetterMaster', descKey: 'badgeDescLetterMaster', icon: 'text' as keyof typeof Ionicons.glyphMap },
+  { id: 'number-whiz', nameKey: 'badgeNumberWhiz', descKey: 'badgeDescNumberWhiz', icon: 'calculator' as keyof typeof Ionicons.glyphMap },
+  { id: 'color-artist', nameKey: 'badgeColorArtist', descKey: 'badgeDescColorArtist', icon: 'color-palette' as keyof typeof Ionicons.glyphMap },
+  { id: 'shape-genius', nameKey: 'badgeShapeGenius', descKey: 'badgeDescShapeGenius', icon: 'shapes' as keyof typeof Ionicons.glyphMap },
+  { id: 'star-collector', nameKey: 'badgeStarCollector', descKey: 'badgeDescStarCollector', icon: 'star-outline' as keyof typeof Ionicons.glyphMap },
+  { id: 'super-learner', nameKey: 'badgeSuperLearner', descKey: 'badgeDescSuperLearner', icon: 'trophy' as keyof typeof Ionicons.glyphMap },
 ];
 
 export default function RewardsScreen() {
@@ -125,7 +125,7 @@ export default function RewardsScreen() {
         <View style={styles.badgesSection}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('badges')}</Text>
           <View style={styles.badgesGrid}>
-            {badges.map((badge) => {
+            {badgeConfig.map((badge) => {
               const isEarned = earnedBadges.includes(badge.id);
               return (
                 <View
@@ -138,7 +138,7 @@ export default function RewardsScreen() {
                 >
                   {!isEarned && (
                     <View style={styles.lockOverlay}>
-                      <Text style={styles.lockIcon}>🔒</Text>
+                      <Ionicons name="lock-closed" size={48} color={colors.textSecondary} />
                     </View>
                   )}
                   <Ionicons 
@@ -148,10 +148,10 @@ export default function RewardsScreen() {
                     style={!isEarned && { opacity: 0.3 }}
                   />
                   <Text style={[styles.badgeName, { color: colors.text }]}>
-                    {badge.name}
+                    {t(badge.nameKey)}
                   </Text>
                   <Text style={[styles.badgeDescription, { color: colors.textSecondary }]}>
-                    {badge.description}
+                    {t(badge.descKey)}
                   </Text>
                 </View>
               );
@@ -250,9 +250,8 @@ function createStyles(colors: any, isRTL: boolean) {
       justifyContent: 'center',
       alignItems: 'center',
       zIndex: 1,
-    },
-    lockIcon: {
-      fontSize: 48,
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+      borderRadius: 16,
     },
     badgeIcon: {
       marginBottom: 12,
