@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, I18nManager } from 'react-native';
+import { useEffect } from 'react';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
@@ -8,10 +9,12 @@ function RootStack() {
   const { isRTL } = useLanguage();
   
   // Force RTL layout for Arabic
-  if (I18nManager.isRTL !== isRTL) {
-    I18nManager.forceRTL(isRTL);
-    I18nManager.allowRTL(isRTL);
-  }
+  useEffect(() => {
+    if (I18nManager.isRTL !== isRTL) {
+      I18nManager.forceRTL(isRTL);
+      I18nManager.allowRTL(isRTL);
+    }
+  }, [isRTL]);
 
   return (
     <Stack

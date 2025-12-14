@@ -58,11 +58,41 @@ export const levels: Level[] = [
     requiredStars: 0,
     unlocked: true,
     items: [
-      { id: '1', name: 'One', pronunciation: 'one', data: { number: 1, count: 1 } },
-      { id: '2', name: 'Two', pronunciation: 'two', data: { number: 2, count: 2 } },
-      { id: '3', name: 'Three', pronunciation: 'three', data: { number: 3, count: 3 } },
-      { id: '4', name: 'Four', pronunciation: 'four', data: { number: 4, count: 4 } },
-      { id: '5', name: 'Five', pronunciation: 'five', data: { number: 5, count: 5 } },
+      { 
+        id: '1', 
+        name: 'One', 
+        pronunciation: 'one', 
+        sound: require('@/assets/numbers/en/1.mp3'),
+        data: { number: 1, count: 1 } 
+      },
+      { 
+        id: '2', 
+        name: 'Two', 
+        pronunciation: 'two', 
+        sound: require('@/assets/numbers/en/2.mp3'),
+        data: { number: 2, count: 2 } 
+      },
+      { 
+        id: '3', 
+        name: 'Three', 
+        pronunciation: 'three', 
+        sound: require('@/assets/numbers/en/3.mp3'),
+        data: { number: 3, count: 3 } 
+      },
+      { 
+        id: '4', 
+        name: 'Four', 
+        pronunciation: 'four', 
+        sound: require('@/assets/numbers/en/4.mp3'),
+        data: { number: 4, count: 4 } 
+      },
+      { 
+        id: '5', 
+        name: 'Five', 
+        pronunciation: 'five', 
+        sound: require('@/assets/numbers/en/5.mp3'),
+        data: { number: 5, count: 5 } 
+      },
     ],
   },
   // Colors - Level 1

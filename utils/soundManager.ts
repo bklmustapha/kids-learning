@@ -12,23 +12,49 @@ export const setSoundEnabled = (enabled: boolean) => {
   soundEnabled = enabled;
 };
 
-export const playSound = async (soundFile?: string, textToSpeak?: string): Promise<void> => {
+export const playSound = async (soundFile?: string | number, textToSpeak?: string): Promise<void> => {
   if (!soundEnabled) return;
 
-  try {
-    if (textToSpeak) {
-      // Use text-to-speech for pronunciation
-      // In a real app, you'd use expo-speech or a TTS service
-      console.log('Speaking:', textToSpeak);
-      // For now, we'll simulate with a simple beep or use expo-speech
-    }
+  console.log("soundFile", soundFile)
 
+  try {
+    // Priority: play audio file if available
     if (soundFile) {
+      let source;
+      
+      if (typeof soundFile === 'number') {
+        // require() returns a number for local assets
+        // expo-av can use the number directly
+        source = soundFile;
+      } else {
+        // URI string for remote assets
+        source = { uri: soundFile };
+      }
+      console.log("source", source)
+      // load sound before playing
       const { sound } = await Audio.Sound.createAsync(
-        { uri: soundFile },
+        source,
         { shouldPlay: true, volume: 1.0 }
       );
+      
+      // Wait for sound to finish before unloading
+      await new Promise<void>((resolve) => {
+        sound.setOnPlaybackStatusUpdate((status) => {
+          if (status.isLoaded && status.didJustFinish) {
+            resolve();
+          }
+        });
+        
+        // Fallback timeout
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      
       await sound.unloadAsync();
+    } else if (textToSpeak) {
+      // Only log if no audio file is available
+      console.log('No audio file available for:', textToSpeak);
     }
   } catch (error) {
     console.error('Error playing sound:', error);

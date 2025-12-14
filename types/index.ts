@@ -14,7 +14,7 @@ export interface LearningItem {
   id: string;
   name: string;
   image?: string;
-  sound?: string;
+  sound?: string | number; // string for URI, number for require() local assets
   pronunciation?: string;
   data?: any; // For letters (uppercase, lowercase), numbers (count), etc.
 }

@@ -27,8 +27,7 @@
       },
       "package": "com.learnforkids.app"
     },
-    "web": {
-    },
+    "web": {},
     "plugins": [
       "expo-router",
       [
@@ -41,4 +40,3 @@
     "scheme": "learnforkids"
   }
 }
-
