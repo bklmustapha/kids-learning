@@ -242,6 +242,14 @@ export default function ChallengeScreen() {
           </TouchableOpacity>
         </View>
 
+        {/* Feedback */}
+        {showFeedback && (
+          <View style={styles.feedbackContainer}>
+            <Text style={[styles.feedbackText, { color: isCorrect ? colors.success : colors.error }]}>
+              {isCorrect ? t('correct') + '!' : `${t('incorrect')}: ${correctItem?.name}`}
+            </Text>
+          </View>
+        )}
         {/* Options */}
         <View style={styles.optionsContainer}>
           {question.options?.map((optionId) => {
@@ -267,23 +275,13 @@ export default function ChallengeScreen() {
                 onPress={() => handleAnswer(optionId)}
                 disabled={showFeedback}
               >
-                {renderItemVisual(optionItem, 100, colors)}
                 <Text style={styles.optionText}>{optionItem.name}</Text>
+                {renderItemVisual(optionItem, 100, colors)}
               </TouchableOpacity>
             );
           })}
         </View>
-
-        {/* Feedback */}
-        {showFeedback && (
-          <View style={styles.feedbackContainer}>
-            <Text style={[styles.feedbackText, { color: isCorrect ? colors.success : colors.error }]}>
-              {isCorrect ? t('correct') + '!' : `${t('incorrect')}: ${correctItem?.name}`}
-            </Text>
-          </View>
-        )}
       </ScrollView>
-
       {/* Navigation - Fixed at bottom */}
       {canProceed && (
         <View style={[styles.navigationContainer, { paddingBottom: insets.bottom }]}>
@@ -529,7 +527,7 @@ function createStyles(colors: any, isRTL: boolean) {
     },
     feedbackContainer: {
       alignItems: 'center',
-      padding: 20,
+      padding: 5,
     },
     feedbackText: {
       fontSize: 28,
