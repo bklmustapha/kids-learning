@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import Svg, { Polygon, Path } from 'react-native-svg';
 import { Button } from '@/components/Button';
 import { getLevelById } from '@/data/levels';
 import { playSound } from '@/utils/soundManager';
@@ -277,7 +278,56 @@ const renderItemVisual = (item: LearningItem, styles: any) => {
 
   // For shapes
   if (item.data?.shape) {
-    return <View style={[styles.shapeContainer, getShapeStyle(item.data.shape)]} />;
+    const shapeStyle = getShapeStyle(item.data.shape);
+    if (item.data.shape === 'star') {
+      return (
+        <View style={[styles.shapeContainer, { width: 200, height: 200 }]}>
+          <Svg width="200" height="200" viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 120,70 190,70 135,110 155,170 100,135 45,170 65,110 10,70 80,70"
+              fill="#FFA07A"
+            />
+          </Svg>
+        </View>
+      );
+    }
+    if (item.data.shape === 'heart') {
+      return (
+        <View style={[styles.shapeContainer, { width: 200, height: 200 }]}>
+          <Svg width="200" height="200" viewBox="0 0 200 200">
+            <Path
+              d="M100,180 C100,180 20,120 20,80 C20,50 40,30 70,30 C85,30 100,45 100,60 C100,45 115,30 130,30 C160,30 180,50 180,80 C180,120 100,180 100,180 Z"
+              fill="#FF69B4"
+            />
+          </Svg>
+        </View>
+      );
+    }
+    if (item.data.shape === 'hexagon') {
+      return (
+        <View style={[styles.shapeContainer, { width: 200, height: 200 }]}>
+          <Svg width="200" height="200" viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 180,60 180,140 100,190 20,140 20,60"
+              fill="#3498DB"
+            />
+          </Svg>
+        </View>
+      );
+    }
+    if (item.data.shape === 'pentagon') {
+      return (
+        <View style={[styles.shapeContainer, { width: 200, height: 200 }]}>
+          <Svg width="200" height="200" viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 180,70 150,160 50,160 20,70"
+              fill="#F39C12"
+            />
+          </Svg>
+        </View>
+      );
+    }
+    return <View style={[styles.shapeContainer, shapeStyle]} />;
   }
 
   // Default: Emoji representation
@@ -303,6 +353,34 @@ const renderItemVisual = (item: LearningItem, styles: any) => {
     wolf: '🐺',
     fox: '🦊',
     panda: '🐼',
+    // Countries
+    france: '🇫🇷',
+    usa: '🇺🇸',
+    uk: '🇬🇧',
+    japan: '🇯🇵',
+    brazil: '🇧🇷',
+    egypt: '🇪🇬',
+    // Fruits & Vegetables
+    apple: '🍎',
+    banana: '🍌',
+    'orange-fruit': '🍊',
+    carrot: '🥕',
+    tomato: '🍅',
+    broccoli: '🥦',
+    // Sports
+    football: '⚽',
+    basketball: '🏀',
+    tennis: '🎾',
+    swimming: '🏊',
+    cycling: '🚴',
+    running: '🏃',
+    // Vehicles
+    car: '🚗',
+    bus: '🚌',
+    train: '🚂',
+    airplane: '✈️',
+    boat: '⛵',
+    bicycle: '🚲',
   };
   return <Text style={styles.emoji}>{emojiMap[item.id] || '📚'}</Text>;
 };
@@ -310,9 +388,9 @@ const renderItemVisual = (item: LearningItem, styles: any) => {
 const getShapeStyle = (shape: string) => {
   switch (shape) {
     case 'circle':
-      return { borderRadius: 100, width: 200, height: 200 };
+      return { borderRadius: 100, width: 200, height: 200, backgroundColor: '#FF6B6B' };
     case 'square':
-      return { borderRadius: 20, width: 200, height: 200 };
+      return { borderRadius: 0, width: 200, height: 200, backgroundColor: '#4ECDC4' };
     case 'triangle':
       return {
         width: 0,
@@ -327,9 +405,22 @@ const getShapeStyle = (shape: string) => {
         borderBottomColor: '#FF6B6B',
       };
     case 'rectangle':
-      return { borderRadius: 10, width: 250, height: 150 };
-    case 'star':
-      return { borderRadius: 0, width: 200, height: 200 };
+      return { borderRadius: 0, width: 250, height: 150, backgroundColor: '#45B7D1' };
+    case 'oval':
+      return { borderRadius: 100, width: 250, height: 150, backgroundColor: '#9B59B6' };
+    case 'diamond':
+      return {
+        width: 200,
+        height: 200,
+        backgroundColor: '#E74C3C',
+        transform: [{ rotate: '45deg' }],
+      };
+    case 'heart':
+      return { width: 200, height: 200, backgroundColor: '#FF69B4' };
+    case 'hexagon':
+      return { width: 200, height: 200, backgroundColor: '#3498DB' };
+    case 'pentagon':
+      return { width: 200, height: 200, backgroundColor: '#F39C12' };
     default:
       return {};
   }

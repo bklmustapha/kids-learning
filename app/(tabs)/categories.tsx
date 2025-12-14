@@ -17,10 +17,13 @@ import { Category, UserProgress } from '@/types';
 
 const categories: { category: Category; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
   { category: 'animals', icon: 'paw', color: '#FF6B6B' },
-  { category: 'letters', icon: 'text', color: '#4ECDC4' },
   { category: 'numbers', icon: 'calculator', color: '#45B7D1' },
   { category: 'colors', icon: 'color-palette', color: '#FFA07A' },
   { category: 'shapes', icon: 'shapes', color: '#98D8C8' },
+  { category: 'countries', icon: 'globe', color: '#3498DB' },
+  { category: 'fruits', icon: 'nutrition', color: '#2ECC71' },
+  { category: 'sports', icon: 'football', color: '#9B59B6' },
+  { category: 'vehicles', icon: 'car', color: '#E67E22' },
 ];
 
 export default function CategoriesScreen() {
@@ -56,58 +59,60 @@ export default function CategoriesScreen() {
         <Text style={styles.headerTitle}>{t('categories')}</Text>
       </View>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80 }}>
-        {categories.map((cat) => {
-          const categoryLevels = getLevelsByCategory(cat.category);
-          const categoryProgress = progress?.categoryProgress[cat.category] || {
-            completed: 0,
-            total: categoryLevels.length,
-            stars: 0,
-          };
-          const progressPercent = categoryProgress.total > 0
-            ? (categoryProgress.completed / categoryProgress.total) * 100
-            : 0;
+        <View style={styles.categoriesGrid}>
+          {categories.map((cat) => {
+            const categoryLevels = getLevelsByCategory(cat.category);
+            const categoryProgress = progress?.categoryProgress[cat.category] || {
+              completed: 0,
+              total: categoryLevels.length,
+              stars: 0,
+            };
+            const progressPercent = categoryProgress.total > 0
+              ? (categoryProgress.completed / categoryProgress.total) * 100
+              : 0;
 
-          return (
-            <TouchableOpacity
-              key={cat.category}
-              style={[styles.categoryCard, { backgroundColor: colors.surface }]}
-              onPress={() => handleCategoryPress(cat.category)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.categoryHeader}>
-                <View style={[styles.categoryIconContainer, { backgroundColor: cat.color + '20' }]}>
-                  <Ionicons name={cat.icon} size={30} color={cat.color} />
+            return (
+              <TouchableOpacity
+                key={cat.category}
+                style={[styles.categoryCard, { backgroundColor: cat.color + '20', borderColor: cat.color + '40' }]}
+                onPress={() => handleCategoryPress(cat.category)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.categoryHeader}>
+                  <View style={[styles.categoryIconContainer, { backgroundColor: cat.color + '20' }]}>
+                    <Ionicons name={cat.icon} size={30} color={cat.color} />
+                  </View>
+                  <View style={styles.categoryInfo}>
+                    <Text style={[styles.categoryTitle, { color: colors.text }]}>
+                      {t(cat.category)}
+                    </Text>
+                    <Text style={[styles.categorySubtitle, { color: colors.textSecondary }]}>
+                      {categoryProgress.completed} / {categoryProgress.total} {t('completed')}
+                    </Text>
+                  </View>
+                  <View style={styles.starsContainer}>
+                    <Ionicons name="star" size={20} color={colors.warning} />
+                    <Text style={[styles.starCount, { color: colors.text }]}>
+                      {categoryProgress.stars}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.categoryInfo}>
-                  <Text style={[styles.categoryTitle, { color: colors.text }]}>
-                    {t(cat.category)}
-                  </Text>
-                  <Text style={[styles.categorySubtitle, { color: colors.textSecondary }]}>
-                    {categoryProgress.completed} / {categoryProgress.total} {t('completed')}
-                  </Text>
+                <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
+                  <View
+                    style={[
+                      styles.progressFill,
+                      { 
+                        width: `${progressPercent}%`, 
+                        backgroundColor: cat.color,
+                        alignSelf: isRTL ? 'flex-end' : 'flex-start',
+                      },
+                    ]}
+                  />
                 </View>
-                <View style={styles.starsContainer}>
-                  <Ionicons name="star" size={20} color={colors.warning} />
-                  <Text style={[styles.starCount, { color: colors.text }]}>
-                    {categoryProgress.stars}
-                  </Text>
-                </View>
-              </View>
-              <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
-                <View
-                  style={[
-                    styles.progressFill,
-                    { 
-                      width: `${progressPercent}%`, 
-                      backgroundColor: cat.color,
-                      alignSelf: isRTL ? 'flex-end' : 'flex-start',
-                    },
-                  ]}
-                />
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );
@@ -136,10 +141,16 @@ function createStyles(colors: any, isRTL: boolean) {
       paddingTop: 16,
       paddingBottom: 20,
     },
+    categoriesGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      paddingHorizontal: 8,
+    },
     categoryCard: {
-      marginHorizontal: 16,
+      width: '48%',
+      marginHorizontal: '1%',
       marginBottom: 16,
-      padding: 20,
+      padding: 16,
       borderRadius: 20,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
@@ -148,37 +159,38 @@ function createStyles(colors: any, isRTL: boolean) {
       elevation: 3,
     },
     categoryHeader: {
-      flexDirection: isRTL ? 'row-reverse' : 'row',
+      flexDirection: 'column',
       alignItems: 'center',
       marginBottom: 12,
     },
     categoryIconContainer: {
-      width: 60,
-      height: 60,
-      borderRadius: 30,
+      width: 50,
+      height: 50,
+      borderRadius: 25,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: isRTL ? 0 : 16,
-      marginLeft: isRTL ? 16 : 0,
+      marginBottom: 8,
     },
     categoryIcon: {
       fontSize: 30,
     },
     categoryInfo: {
-      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+      marginBottom: 8,
     },
     categoryTitle: {
-      fontSize: 20,
+      fontSize: 16,
       fontWeight: 'bold',
       marginBottom: 4,
-      textAlign: isRTL ? 'right' : 'left',
+      textAlign: 'center',
     },
     categorySubtitle: {
-      fontSize: 14,
-      textAlign: isRTL ? 'right' : 'left',
+      fontSize: 12,
+      textAlign: 'center',
     },
     starsContainer: {
-      flexDirection: isRTL ? 'row-reverse' : 'row',
+      flexDirection: 'row',
       alignItems: 'center',
       gap: 4,
     },

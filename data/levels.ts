@@ -42,22 +42,6 @@ export const levels: Level[] = [
       { id: 'panda', name: 'Panda', pronunciation: 'panda' },
     ],
   },
-  // Letters - Level 1
-  {
-    id: 'letters-1',
-    category: 'letters',
-    levelNumber: 1,
-    title: 'Letters A-E',
-    requiredStars: 0,
-    unlocked: true,
-    items: [
-      { id: 'a', name: 'A', pronunciation: 'ay', data: { uppercase: 'A', lowercase: 'a' } },
-      { id: 'b', name: 'B', pronunciation: 'bee', data: { uppercase: 'B', lowercase: 'b' } },
-      { id: 'c', name: 'C', pronunciation: 'see', data: { uppercase: 'C', lowercase: 'c' } },
-      { id: 'd', name: 'D', pronunciation: 'dee', data: { uppercase: 'D', lowercase: 'd' } },
-      { id: 'e', name: 'E', pronunciation: 'ee', data: { uppercase: 'E', lowercase: 'e' } },
-    ],
-  },
   // Numbers - Level 1
   {
     id: 'numbers-1',
@@ -151,6 +135,90 @@ export const levels: Level[] = [
       { id: 'triangle', name: 'Triangle', pronunciation: 'triangle', data: { shape: 'triangle' } },
       { id: 'rectangle', name: 'Rectangle', pronunciation: 'rectangle', data: { shape: 'rectangle' } },
       { id: 'star', name: 'Star', pronunciation: 'star', data: { shape: 'star' } },
+    ],
+  },
+  // Shapes - Level 2
+  {
+    id: 'shapes-2',
+    category: 'shapes',
+    levelNumber: 2,
+    title: 'More Shapes',
+    requiredStars: 3,
+    unlocked: false,
+    items: [
+      { id: 'oval', name: 'Oval', pronunciation: 'oval', data: { shape: 'oval' } },
+      { id: 'diamond', name: 'Diamond', pronunciation: 'diamond', data: { shape: 'diamond' } },
+      { id: 'heart', name: 'Heart', pronunciation: 'heart', data: { shape: 'heart' } },
+      { id: 'hexagon', name: 'Hexagon', pronunciation: 'hexagon', data: { shape: 'hexagon' } },
+      { id: 'pentagon', name: 'Pentagon', pronunciation: 'pentagon', data: { shape: 'pentagon' } },
+    ],
+  },
+  // Countries - Level 1
+  {
+    id: 'countries-1',
+    category: 'countries',
+    levelNumber: 1,
+    title: 'Countries',
+    requiredStars: 0,
+    unlocked: true,
+    items: [
+      { id: 'france', name: 'France', pronunciation: 'france' },
+      { id: 'usa', name: 'USA', pronunciation: 'usa' },
+      { id: 'uk', name: 'UK', pronunciation: 'uk' },
+      { id: 'japan', name: 'Japan', pronunciation: 'japan' },
+      { id: 'brazil', name: 'Brazil', pronunciation: 'brazil' },
+      { id: 'egypt', name: 'Egypt', pronunciation: 'egypt' },
+    ],
+  },
+  // Fruits & Vegetables - Level 1
+  {
+    id: 'fruits-1',
+    category: 'fruits',
+    levelNumber: 1,
+    title: 'Fruits & Vegetables',
+    requiredStars: 0,
+    unlocked: true,
+    items: [
+      { id: 'apple', name: 'Apple', pronunciation: 'apple' },
+      { id: 'banana', name: 'Banana', pronunciation: 'banana' },
+      { id: 'orange-fruit', name: 'Orange', pronunciation: 'orange' },
+      { id: 'carrot', name: 'Carrot', pronunciation: 'carrot' },
+      { id: 'tomato', name: 'Tomato', pronunciation: 'tomato' },
+      { id: 'broccoli', name: 'Broccoli', pronunciation: 'broccoli' },
+    ],
+  },
+  // Sports - Level 1
+  {
+    id: 'sports-1',
+    category: 'sports',
+    levelNumber: 1,
+    title: 'Sports',
+    requiredStars: 0,
+    unlocked: true,
+    items: [
+      { id: 'football', name: 'Football', pronunciation: 'football' },
+      { id: 'basketball', name: 'Basketball', pronunciation: 'basketball' },
+      { id: 'tennis', name: 'Tennis', pronunciation: 'tennis' },
+      { id: 'swimming', name: 'Swimming', pronunciation: 'swimming' },
+      { id: 'cycling', name: 'Cycling', pronunciation: 'cycling' },
+      { id: 'running', name: 'Running', pronunciation: 'running' },
+    ],
+  },
+  // Vehicles - Level 1
+  {
+    id: 'vehicles-1',
+    category: 'vehicles',
+    levelNumber: 1,
+    title: 'Vehicles',
+    requiredStars: 0,
+    unlocked: true,
+    items: [
+      { id: 'car', name: 'Car', pronunciation: 'car' },
+      { id: 'bus', name: 'Bus', pronunciation: 'bus' },
+      { id: 'train', name: 'Train', pronunciation: 'train' },
+      { id: 'airplane', name: 'Airplane', pronunciation: 'airplane' },
+      { id: 'boat', name: 'Boat', pronunciation: 'boat' },
+      { id: 'bicycle', name: 'Bicycle', pronunciation: 'bicycle' },
     ],
   },
 ];

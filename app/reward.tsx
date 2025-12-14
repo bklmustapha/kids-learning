@@ -82,9 +82,6 @@ export default function RewardScreen() {
       if (category === 'animals' && newCategoryCompleted >= 2 && !newBadges.includes('animal-expert')) {
         newBadges.push('animal-expert');
       }
-      if (category === 'letters' && newCategoryCompleted >= 1 && !newBadges.includes('letter-master')) {
-        newBadges.push('letter-master');
-      }
       if (category === 'numbers' && newCategoryCompleted >= 1 && !newBadges.includes('number-whiz')) {
         newBadges.push('number-whiz');
       }

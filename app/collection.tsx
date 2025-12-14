@@ -52,9 +52,6 @@ export default function CollectionScreen() {
     if (userProgress.categoryProgress.animals.completed >= 2) {
       earned.push('animal-expert');
     }
-    if (userProgress.categoryProgress.letters.completed >= 1) {
-      earned.push('letter-master');
-    }
     if (userProgress.categoryProgress.numbers.completed >= 1) {
       earned.push('number-whiz');
     }

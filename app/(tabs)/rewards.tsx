@@ -15,7 +15,6 @@ import { UserProgress } from '@/types';
 const badgeConfig = [
   { id: 'first-star', nameKey: 'badgeFirstStar', descKey: 'badgeDescFirstStar', icon: 'star' as keyof typeof Ionicons.glyphMap },
   { id: 'animal-expert', nameKey: 'badgeAnimalExpert', descKey: 'badgeDescAnimalExpert', icon: 'paw' as keyof typeof Ionicons.glyphMap },
-  { id: 'letter-master', nameKey: 'badgeLetterMaster', descKey: 'badgeDescLetterMaster', icon: 'text' as keyof typeof Ionicons.glyphMap },
   { id: 'number-whiz', nameKey: 'badgeNumberWhiz', descKey: 'badgeDescNumberWhiz', icon: 'calculator' as keyof typeof Ionicons.glyphMap },
   { id: 'color-artist', nameKey: 'badgeColorArtist', descKey: 'badgeDescColorArtist', icon: 'color-palette' as keyof typeof Ionicons.glyphMap },
   { id: 'shape-genius', nameKey: 'badgeShapeGenius', descKey: 'badgeDescShapeGenius', icon: 'shapes' as keyof typeof Ionicons.glyphMap },
@@ -57,9 +56,6 @@ export default function RewardsScreen() {
     }
     if (userProgress.categoryProgress.animals.completed >= 2) {
       earned.push('animal-expert');
-    }
-    if (userProgress.categoryProgress.letters.completed >= 1) {
-      earned.push('letter-master');
     }
     if (userProgress.categoryProgress.numbers.completed >= 1) {
       earned.push('number-whiz');

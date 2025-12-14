@@ -184,10 +184,13 @@ export default function HomeScreen() {
 function getCategoryIcon(category: Category): keyof typeof Ionicons.glyphMap {
   const icons: Record<Category, keyof typeof Ionicons.glyphMap> = {
     animals: 'paw',
-    letters: 'text',
     numbers: 'calculator',
     colors: 'color-palette',
     shapes: 'shapes',
+    countries: 'globe',
+    fruits: 'nutrition',
+    sports: 'football',
+    vehicles: 'car',
   };
   return icons[category] || 'library';
 }

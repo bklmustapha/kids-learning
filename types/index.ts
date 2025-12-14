@@ -1,4 +1,4 @@
-export type Category = 'animals' | 'letters' | 'numbers' | 'colors' | 'shapes';
+export type Category = 'animals' | 'numbers' | 'colors' | 'shapes' | 'countries' | 'fruits' | 'sports' | 'vehicles';
 
 export interface Level {
   id: string;

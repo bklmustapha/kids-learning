@@ -19,10 +19,13 @@ import { Category, Level, UserProgress } from '@/types';
 
 const categoryInfo: Record<Category, { title: string; icon: string }> = {
   animals: { title: 'Animals', icon: '🐶' },
-  letters: { title: 'Letters', icon: '🔤' },
   numbers: { title: 'Numbers', icon: '🔢' },
   colors: { title: 'Colors', icon: '🎨' },
   shapes: { title: 'Shapes', icon: '🔺' },
+  countries: { title: 'Countries', icon: '🌍' },
+  fruits: { title: 'Fruits & Vegetables', icon: '🥕' },
+  sports: { title: 'Sports', icon: '⚽' },
+  vehicles: { title: 'Vehicles', icon: '🚗' },
 };
 
 export default function LevelOverviewScreen() {
@@ -71,10 +74,13 @@ export default function LevelOverviewScreen() {
   const getCategoryIcon = (cat: Category): keyof typeof Ionicons.glyphMap => {
     const icons: Record<Category, keyof typeof Ionicons.glyphMap> = {
       animals: 'paw',
-      letters: 'text',
       numbers: 'calculator',
       colors: 'color-palette',
       shapes: 'shapes',
+      countries: 'globe',
+      fruits: 'nutrition',
+      sports: 'football',
+      vehicles: 'car',
     };
     return icons[cat] || 'library';
   };
@@ -82,10 +88,13 @@ export default function LevelOverviewScreen() {
   const getCategoryColor = (cat: Category): string => {
     const colors: Record<Category, string> = {
       animals: '#FF6B6B',
-      letters: '#4ECDC4',
       numbers: '#45B7D1',
       colors: '#FFA07A',
       shapes: '#98D8C8',
+      countries: '#3498DB',
+      fruits: '#2ECC71',
+      sports: '#9B59B6',
+      vehicles: '#E67E22',
     };
     return colors[cat] || '#4A90E2';
   };

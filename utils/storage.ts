@@ -15,10 +15,13 @@ export const getDefaultProgress = (): UserProgress => {
     levelStars: {},
     categoryProgress: {
       animals: { completed: 0, total: 2, stars: 0 },
-      letters: { completed: 0, total: 1, stars: 0 },
       numbers: { completed: 0, total: 1, stars: 0 },
       colors: { completed: 0, total: 2, stars: 0 },
-      shapes: { completed: 0, total: 1, stars: 0 },
+      shapes: { completed: 0, total: 2, stars: 0 },
+      countries: { completed: 0, total: 1, stars: 0 },
+      fruits: { completed: 0, total: 1, stars: 0 },
+      sports: { completed: 0, total: 1, stars: 0 },
+      vehicles: { completed: 0, total: 1, stars: 0 },
     },
   };
 };

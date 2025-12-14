@@ -90,7 +90,7 @@ export default function SettingsScreen() {
   const handleAbout = () => {
     Alert.alert(
       t('about'),
-      'Learn for Kids\nVersion 1.0.0\n\nAn educational app for children to learn animals, letters, numbers, colors, and shapes through interactive games.',
+      'Learn for Kids\nVersion 1.0.0\n\nAn educational app for children to learn animals, numbers, colors, shapes, organs, countries, fruits, and sports through interactive games.',
       [{ text: 'OK' }]
     );
   };

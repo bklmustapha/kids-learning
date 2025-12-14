@@ -4,11 +4,15 @@ import type { Language } from '@/contexts/LanguageContext';
 const levelTitleTranslations: Record<string, Record<Language, string>> = {
   'animals-1': { en: 'Farm Animals', fr: 'Animaux de la ferme', ar: 'حيوانات المزرعة' },
   'animals-2': { en: 'Wild Animals', fr: 'Animaux sauvages', ar: 'الحيوانات البرية' },
-  'letters-1': { en: 'Letters A-E', fr: 'Lettres A-E', ar: 'الحروف أ-ه' },
   'numbers-1': { en: 'Numbers 1-5', fr: 'Nombres 1-5', ar: 'الأرقام 1-5' },
   'colors-1': { en: 'Basic Colors', fr: 'Couleurs de base', ar: 'الألوان الأساسية' },
   'colors-2': { en: 'More Colors', fr: 'Plus de couleurs', ar: 'المزيد من الألوان' },
   'shapes-1': { en: 'Basic Shapes', fr: 'Formes de base', ar: 'الأشكال الأساسية' },
+  'shapes-2': { en: 'More Shapes', fr: 'Plus de formes', ar: 'المزيد من الأشكال' },
+  'countries-1': { en: 'Countries', fr: 'Pays', ar: 'الدول' },
+  'fruits-1': { en: 'Fruits & Vegetables', fr: 'Fruits et légumes', ar: 'الفواكه والخضروات' },
+  'sports-1': { en: 'Sports', fr: 'Sports', ar: 'الرياضات' },
+  'vehicles-1': { en: 'Vehicles', fr: 'Véhicules', ar: 'المركبات' },
 };
 
 const itemNameTranslations: Record<string, Record<Language, string>> = {
@@ -58,6 +62,40 @@ const itemNameTranslations: Record<string, Record<Language, string>> = {
   'triangle': { en: 'Triangle', fr: 'Triangle', ar: 'مثلث' },
   'rectangle': { en: 'Rectangle', fr: 'Rectangle', ar: 'مستطيل' },
   'star': { en: 'Star', fr: 'Étoile', ar: 'نجمة' },
+  // Shapes - More
+  'oval': { en: 'Oval', fr: 'Ovale', ar: 'بيضاوي' },
+  'diamond': { en: 'Diamond', fr: 'Losange', ar: 'معين' },
+  'heart': { en: 'Heart', fr: 'Cœur', ar: 'قلب' },
+  'hexagon': { en: 'Hexagon', fr: 'Hexagone', ar: 'سداسي' },
+  'pentagon': { en: 'Pentagon', fr: 'Pentagone', ar: 'خماسي' },
+  // Countries
+  'france': { en: 'France', fr: 'France', ar: 'فرنسا' },
+  'usa': { en: 'USA', fr: 'États-Unis', ar: 'الولايات المتحدة' },
+  'uk': { en: 'UK', fr: 'Royaume-Uni', ar: 'المملكة المتحدة' },
+  'japan': { en: 'Japan', fr: 'Japon', ar: 'اليابان' },
+  'brazil': { en: 'Brazil', fr: 'Brésil', ar: 'البرازيل' },
+  'egypt': { en: 'Egypt', fr: 'Égypte', ar: 'مصر' },
+  // Fruits & Vegetables
+  'apple': { en: 'Apple', fr: 'Pomme', ar: 'تفاحة' },
+  'banana': { en: 'Banana', fr: 'Banane', ar: 'موزة' },
+  'orange-fruit': { en: 'Orange', fr: 'Orange', ar: 'برتقال' },
+  'carrot': { en: 'Carrot', fr: 'Carotte', ar: 'جزر' },
+  'tomato': { en: 'Tomato', fr: 'Tomate', ar: 'طماطم' },
+  'broccoli': { en: 'Broccoli', fr: 'Brocoli', ar: 'بروكلي' },
+  // Sports
+  'football': { en: 'Football', fr: 'Football', ar: 'كرة القدم' },
+  'basketball': { en: 'Basketball', fr: 'Basketball', ar: 'كرة السلة' },
+  'tennis': { en: 'Tennis', fr: 'Tennis', ar: 'تنس' },
+  'swimming': { en: 'Swimming', fr: 'Natation', ar: 'سباحة' },
+  'cycling': { en: 'Cycling', fr: 'Cyclisme', ar: 'ركوب الدراجات' },
+  'running': { en: 'Running', fr: 'Course', ar: 'جري' },
+  // Vehicles
+  'car': { en: 'Car', fr: 'Voiture', ar: 'سيارة' },
+  'bus': { en: 'Bus', fr: 'Bus', ar: 'حافلة' },
+  'train': { en: 'Train', fr: 'Train', ar: 'قطار' },
+  'airplane': { en: 'Airplane', fr: 'Avion', ar: 'طائرة' },
+  'boat': { en: 'Boat', fr: 'Bateau', ar: 'قارب' },
+  'bicycle': { en: 'Bicycle', fr: 'Vélo', ar: 'دراجة' },
 };
 
 /**

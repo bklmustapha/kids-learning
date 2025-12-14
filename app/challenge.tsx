@@ -11,6 +11,7 @@ import {
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import Svg, { Polygon, Path } from 'react-native-svg';
 import { Button } from '@/components/Button';
 import { getLevelById } from '@/data/levels';
 import { playSound, playSuccessSound, playErrorSound } from '@/utils/soundManager';
@@ -336,11 +337,19 @@ const renderItemVisual = (item: LearningItem, size: number = 100, colors: any) =
   }
 
   if (item.data?.shape) {
+    const shapeStyle = getShapePreviewStyle(item.data.shape, size);
+    if (shapeStyle.svg) {
+      return (
+        <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+          {shapeStyle.svg}
+        </View>
+      );
+    }
     return (
       <View
         style={[
           { width: size, height: size, justifyContent: 'center', alignItems: 'center' },
-          getShapePreviewStyle(item.data.shape, size),
+          shapeStyle,
         ]}
       />
     );
@@ -368,6 +377,34 @@ const renderItemVisual = (item: LearningItem, size: number = 100, colors: any) =
     wolf: '🐺',
     fox: '🦊',
     panda: '🐼',
+    // Countries
+    france: '🇫🇷',
+    usa: '🇺🇸',
+    uk: '🇬🇧',
+    japan: '🇯🇵',
+    brazil: '🇧🇷',
+    egypt: '🇪🇬',
+    // Fruits & Vegetables
+    apple: '🍎',
+    banana: '🍌',
+    'orange-fruit': '🍊',
+    carrot: '🥕',
+    tomato: '🍅',
+    broccoli: '🥦',
+    // Sports
+    football: '⚽',
+    basketball: '🏀',
+    tennis: '🎾',
+    swimming: '🏊',
+    cycling: '🚴',
+    running: '🏃',
+    // Vehicles
+    car: '🚗',
+    bus: '🚌',
+    train: '🚂',
+    airplane: '✈️',
+    boat: '⛵',
+    bicycle: '🚲',
   };
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
@@ -379,9 +416,9 @@ const renderItemVisual = (item: LearningItem, size: number = 100, colors: any) =
 const getShapePreviewStyle = (shape: string, size: number): any => {
   switch (shape) {
     case 'circle':
-      return { borderRadius: size / 2, backgroundColor: '#FF6B6B' };
+      return { borderRadius: size / 2, backgroundColor: '#FF6B6B', width: size, height: size };
     case 'square':
-      return { borderRadius: 10, backgroundColor: '#4ECDC4' };
+      return { borderRadius: 0, backgroundColor: '#4ECDC4', width: size, height: size };
     case 'triangle':
       return {
         width: 0,
@@ -396,11 +433,62 @@ const getShapePreviewStyle = (shape: string, size: number): any => {
         borderBottomColor: '#FF6B6B',
       };
     case 'rectangle':
-      return { borderRadius: 5, backgroundColor: '#45B7D1', width: size * 1.5, height: size };
+      return { borderRadius: 0, backgroundColor: '#45B7D1', width: size * 1.5, height: size };
     case 'star':
-      return { backgroundColor: '#FFA07A', borderRadius: 0 };
+      return {
+        svg: (
+          <Svg width={size} height={size} viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 120,70 190,70 135,110 155,170 100,135 45,170 65,110 10,70 80,70"
+              fill="#FFA07A"
+            />
+          </Svg>
+        ),
+      };
+    case 'oval':
+      return { borderRadius: size / 2, backgroundColor: '#9B59B6', width: size * 1.5, height: size };
+    case 'diamond':
+      return {
+        width: size,
+        height: size,
+        backgroundColor: '#E74C3C',
+        transform: [{ rotate: '45deg' }],
+      };
+    case 'heart':
+      return {
+        svg: (
+          <Svg width={size} height={size} viewBox="0 0 200 200">
+            <Path
+              d="M100,180 C100,180 20,120 20,80 C20,50 40,30 70,30 C85,30 100,45 100,60 C100,45 115,30 130,30 C160,30 180,50 180,80 C180,120 100,180 100,180 Z"
+              fill="#FF69B4"
+            />
+          </Svg>
+        ),
+      };
+    case 'hexagon':
+      return {
+        svg: (
+          <Svg width={size} height={size} viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 180,60 180,140 100,190 20,140 20,60"
+              fill="#3498DB"
+            />
+          </Svg>
+        ),
+      };
+    case 'pentagon':
+      return {
+        svg: (
+          <Svg width={size} height={size} viewBox="0 0 200 200">
+            <Polygon
+              points="100,10 180,70 150,160 50,160 20,70"
+              fill="#F39C12"
+            />
+          </Svg>
+        ),
+      };
     default:
-      return { backgroundColor: '#95A5A6' };
+      return { backgroundColor: '#95A5A6', width: size, height: size };
   }
 };
 
