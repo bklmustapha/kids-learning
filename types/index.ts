@@ -40,6 +40,6 @@ export interface ChallengeQuestion {
   question: string;
   correctAnswer: string | number;
   options?: string[];
-  audio?: string;
+  audio?: string | number; // string for pronunciation, number for audio file
 }
 

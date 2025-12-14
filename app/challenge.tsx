@@ -17,6 +17,7 @@ import { playSound, playSuccessSound, playErrorSound } from '@/utils/soundManage
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { saveProgress, getProgress } from '@/utils/storage';
+import { getItemAudio } from '@/utils/audioAssets';
 import { LearningItem, ChallengeQuestion } from '@/types';
 
 const { width } = Dimensions.get('window');
@@ -26,7 +27,7 @@ export default function ChallengeScreen() {
   const params = useLocalSearchParams<{ levelId: string }>();
   const levelId = params.levelId as string;
   const { colors } = useTheme();
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const insets = useSafeAreaInsets();
   const [items, setItems] = useState<LearningItem[]>([]);
   const [questions, setQuestions] = useState<ChallengeQuestion[]>([]);
@@ -40,14 +41,25 @@ export default function ChallengeScreen() {
 
   useEffect(() => {
     loadLevel();
-  }, [levelId]);
+  }, [levelId, language]);
 
   const loadLevel = () => {
     const level = getLevelById(levelId);
     if (level) {
-      setItems(level.items);
+      // Get language-specific audio for items
+      const itemsWithAudio = level.items.map(item => {
+        // For numbers category, get language-specific audio
+        if (level.category === 'numbers') {
+          const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
+          if (languageAudio) {
+            return { ...item, sound: languageAudio };
+          }
+        }
+        return item;
+      });
+      setItems(itemsWithAudio);
       setLevelTitle(level.title);
-      generateQuestions(level.items);
+      generateQuestions(itemsWithAudio);
     }
   };
 
@@ -99,6 +111,9 @@ export default function ChallengeScreen() {
         .slice(0, 3);
       const allOptions = [randomItem, ...wrongOptions].sort(() => Math.random() - 0.5);
 
+      // Use the item's sound (language-specific) if available, otherwise use pronunciation
+      const audioSource = randomItem.sound || randomItem.pronunciation || randomItem.name;
+
       return {
         id: `q${index}`,
         type,
@@ -107,7 +122,7 @@ export default function ChallengeScreen() {
           : `Tap the ${randomItem.name}!`,
         correctAnswer: randomItem.id,
         options: allOptions.map(item => item.id),
-        audio: randomItem.pronunciation || randomItem.name,
+        audio: audioSource,
       };
     });
 
@@ -153,7 +168,12 @@ export default function ChallengeScreen() {
   const handlePlaySound = async () => {
     const question = questions[currentQuestion];
     if (question.audio) {
-      await playSound(undefined, question.audio);
+      // question.audio can be a number (sound file) or string (pronunciation)
+      if (typeof question.audio === 'number') {
+        await playSound(question.audio);
+      } else {
+        await playSound(undefined, question.audio);
+      }
     }
   };
 

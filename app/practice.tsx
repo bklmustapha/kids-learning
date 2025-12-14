@@ -17,6 +17,7 @@ import { playSound, playSuccessSound, playErrorSound } from '@/utils/soundManage
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { saveProgress, getProgress } from '@/utils/storage';
+import { getItemAudio } from '@/utils/audioAssets';
 import { LearningItem } from '@/types';
 
 const { width } = Dimensions.get('window');
@@ -26,7 +27,7 @@ export default function PracticeScreen() {
   const params = useLocalSearchParams<{ levelId: string }>();
   const levelId = params.levelId as string;
   const { colors } = useTheme();
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const insets = useSafeAreaInsets();
   const [items, setItems] = useState<LearningItem[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -38,7 +39,7 @@ export default function PracticeScreen() {
 
   useEffect(() => {
     loadLevel();
-  }, [levelId]);
+  }, [levelId, language]);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -49,7 +50,18 @@ export default function PracticeScreen() {
   const loadLevel = () => {
     const level = getLevelById(levelId);
     if (level) {
-      setItems(level.items);
+      // Get language-specific audio for items
+      const itemsWithAudio = level.items.map(item => {
+        // For numbers category, get language-specific audio
+        if (level.category === 'numbers') {
+          const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
+          if (languageAudio) {
+            return { ...item, sound: languageAudio };
+          }
+        }
+        return item;
+      });
+      setItems(itemsWithAudio);
       setLevelTitle(level.title);
       generateQuestion();
     }

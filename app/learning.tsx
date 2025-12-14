@@ -18,6 +18,7 @@ import { playSound } from '@/utils/soundManager';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { saveProgress, getProgress } from '@/utils/storage';
+import { getItemAudio } from '@/utils/audioAssets';
 import { LearningItem } from '@/types';
 
 const { width } = Dimensions.get('window');
@@ -27,7 +28,7 @@ export default function LearningScreen() {
   const params = useLocalSearchParams<{ levelId: string }>();
   const levelId = params.levelId as string;
   const { colors } = useTheme();
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [items, setItems] = useState<LearningItem[]>([]);
   const [levelTitle, setLevelTitle] = useState('');
@@ -36,7 +37,7 @@ export default function LearningScreen() {
   useEffect(() => {
     loadLevel();
     slideAnim.setValue(0);
-  }, [levelId]);
+  }, [levelId, language]);
 
   useEffect(() => {
     if (items.length > 0 && currentIndex < items.length) {
@@ -48,12 +49,24 @@ export default function LearningScreen() {
   const loadLevel = () => {
     const level = getLevelById(levelId);
     if (level) {
-      setItems(level.items);
+      // Get language-specific audio for items
+      const itemsWithAudio = level.items.map(item => {
+        // For numbers category, get language-specific audio
+        if (level.category === 'numbers') {
+          const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
+          if (languageAudio) {
+            return { ...item, sound: languageAudio };
+          }
+        }
+        return item;
+      });
+      setItems(itemsWithAudio);
       setLevelTitle(level.title);
     }
   };
 
   const playItemSound = async (item: LearningItem) => {
+    // Use the item's sound (which is now language-specific) or fallback to pronunciation
     await playSound(item.sound, item.pronunciation || item.name);
   };
 
