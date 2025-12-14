@@ -97,7 +97,7 @@ export default function CategoriesScreen() {
                     </Text>
                   </View>
                 </View>
-                <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
+                <View style={[styles.progressBar, { backgroundColor: cat.color + '30' }]}>
                   <View
                     style={[
                       styles.progressFill,
