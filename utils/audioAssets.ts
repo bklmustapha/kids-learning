@@ -287,27 +287,6 @@ const shapeAudios: Record<Language, Record<string, number>> = {
   },
 };
 
-// Import all construction audio files
-const constructionAudios: Record<Language, Record<string, number>> = {
-  en: {
-    'bulldozer': require('@/assets/construction/en/bulldozer.mp3'),
-    'crane': require('@/assets/construction/en/crane.mp3'),
-    'excavator': require('@/assets/construction/en/excavator.mp3'),
-    'forklift': require('@/assets/construction/en/forklift.mp3'),
-    'tractor': require('@/assets/construction/en/tractor.mp3'),
-    'truck': require('@/assets/construction/en/truck.mp3'),
-  },
-  fr: {},
-  ar: {
-    'bulldozer': require('@/assets/construction/ar/bulldozer.mp3'),
-    'crane': require('@/assets/construction/ar/crane.mp3'),
-    'excavator': require('@/assets/construction/ar/excavator.mp3'),
-    'forklift': require('@/assets/construction/ar/forklift.mp3'),
-    'tractor': require('@/assets/construction/ar/tractor.mp3'),
-    'truck': require('@/assets/construction/ar/truck.mp3'),
-  },
-};
-
 // Import all country audio files
 const countryAudios: Record<Language, Record<string, number>> = {
   en: {
@@ -336,7 +315,32 @@ const countryAudios: Record<Language, Record<string, number>> = {
     'uk': require('@/assets/countries/en/uk.mp3'),
     'usa': require('@/assets/countries/en/usa.mp3'),
   },
-  fr: {},
+  fr: {
+    'brazil': require('@/assets/countries/fr/brazil.mp3'),
+    'china': require('@/assets/countries/fr/china.mp3'),
+    'egypt': require('@/assets/countries/fr/egypt.mp3'),
+    'france': require('@/assets/countries/fr/france.mp3'),
+    'germany': require('@/assets/countries/fr/germany.mp3'),
+    'ghana': require('@/assets/countries/fr/ghana.mp3'),
+    'greece': require('@/assets/countries/fr/greece.mp3'),
+    'india': require('@/assets/countries/fr/india.mp3'),
+    'indonesia': require('@/assets/countries/fr/indonesia.mp3'),
+    'italy': require('@/assets/countries/fr/italy.mp3'),
+    'japan': require('@/assets/countries/fr/japan.mp3'),
+    'kenya': require('@/assets/countries/fr/kenya.mp3'),
+    'morocco': require('@/assets/countries/fr/morocco.mp3'),
+    'netherlands': require('@/assets/countries/fr/netherlands.mp3'),
+    'nigeria': require('@/assets/countries/fr/nigeria.mp3'),
+    'singapore': require('@/assets/countries/fr/singapore.mp3'),
+    'south-africa': require('@/assets/countries/fr/southafrica.mp3'),
+    'south-korea': require('@/assets/countries/fr/southkorea.mp3'),
+    'spain': require('@/assets/countries/fr/spain.mp3'),
+    'sweden': require('@/assets/countries/fr/sweden.mp3'),
+    'tanzania': require('@/assets/countries/fr/tanzania.mp3'),
+    'thailand': require('@/assets/countries/fr/thailand.mp3'),
+    'uk': require('@/assets/countries/fr/uk.mp3'),
+    'usa': require('@/assets/countries/fr/usa.mp3'),
+  },
   ar: {
     'brazil': require('@/assets/countries/ar/brazil.mp3'),
     'china': require('@/assets/countries/ar/china.mp3'),
@@ -392,7 +396,32 @@ const fruitsAudios: Record<Language, Record<string, number>> = {
     'tomato': require('@/assets/fruits_vegetables/en/tomato.mp3'),
     'watermelon': require('@/assets/fruits_vegetables/en/watermelon.mp3'),
   },
-  fr: {},
+  fr: {
+    'apple': require('@/assets/fruits_vegetables/fr/apple.mp3'),
+    'banana': require('@/assets/fruits_vegetables/fr/banana.mp3'),
+    'beans': require('@/assets/fruits_vegetables/fr/beans.mp3'),
+    'broccoli': require('@/assets/fruits_vegetables/fr/broccoli.mp3'),
+    'cabbage': require('@/assets/fruits_vegetables/fr/cabbage.mp3'),
+    'carrot': require('@/assets/fruits_vegetables/fr/carrot.mp3'),
+    'cherry': require('@/assets/fruits_vegetables/fr/cherry.mp3'),
+    'corn': require('@/assets/fruits_vegetables/fr/corn.mp3'),
+    'cucumber': require('@/assets/fruits_vegetables/fr/cucumber.mp3'),
+    'grape': require('@/assets/fruits_vegetables/fr/grape.mp3'),
+    'kiwi': require('@/assets/fruits_vegetables/fr/kiwi.mp3'),
+    'lettuce': require('@/assets/fruits_vegetables/fr/lettuce.mp3'),
+    'mango': require('@/assets/fruits_vegetables/fr/mango.mp3'),
+    'onion': require('@/assets/fruits_vegetables/fr/onion.mp3'),
+    'orange-fruit': require('@/assets/fruits_vegetables/fr/orange.mp3'),
+    'pear': require('@/assets/fruits_vegetables/fr/pear.mp3'),
+    'peas': require('@/assets/fruits_vegetables/fr/peas.mp3'),
+    'pepper': require('@/assets/fruits_vegetables/fr/pepper.mp3'),
+    'pineapple': require('@/assets/fruits_vegetables/fr/pineapple.mp3'),
+    'potato': require('@/assets/fruits_vegetables/fr/potato.mp3'),
+    'spinach': require('@/assets/fruits_vegetables/fr/spinach.mp3'),
+    'strawberry': require('@/assets/fruits_vegetables/fr/strawberry.mp3'),
+    'tomato': require('@/assets/fruits_vegetables/fr/tomato.mp3'),
+    'watermelon': require('@/assets/fruits_vegetables/fr/watermelon.mp3'),
+  },
   ar: {
     'apple': require('@/assets/fruits_vegetables/ar/apple.mp3'),
     'banana': require('@/assets/fruits_vegetables/ar/banana.mp3'),
@@ -449,7 +478,32 @@ const sportsAudios: Record<Language, Record<string, number>> = {
     'volleyball': require('@/assets/sports/en/volleyball.mp3'),
     'water-polo': require('@/assets/sports/en/waterpolo.mp3'),
   },
-  fr: {},
+  fr: {
+    'baseball': require('@/assets/sports/fr/baseball.mp3'),
+    'basketball': require('@/assets/sports/fr/basketball.mp3'),
+    'cricket': require('@/assets/sports/fr/cricket.mp3'),
+    'curling': require('@/assets/sports/fr/curling.mp3'),
+    'cycling': require('@/assets/sports/fr/cycling.mp3'),
+    'diving': require('@/assets/sports/fr/diving.mp3'),
+    'football': require('@/assets/sports/fr/football.mp3'),
+    'handball': require('@/assets/sports/fr/handball.mp3'),
+    'hockey': require('@/assets/sports/fr/hockey.mp3'),
+    'ice-skating': require('@/assets/sports/fr/iceskating.mp3'),
+    'kayaking': require('@/assets/sports/fr/kayaking.mp3'),
+    'rowing': require('@/assets/sports/fr/rowing.mp3'),
+    'rugby': require('@/assets/sports/fr/rugby.mp3'),
+    'running': require('@/assets/sports/fr/running.mp3'),
+    'sailing': require('@/assets/sports/fr/sailing.mp3'),
+    'skiing': require('@/assets/sports/fr/skiing.mp3'),
+    'sledding': require('@/assets/sports/fr/sledding.mp3'),
+    'snowboarding': require('@/assets/sports/fr/snowboarding.mp3'),
+    'soccer': require('@/assets/sports/fr/soccer.mp3'),
+    'surfing': require('@/assets/sports/fr/surfing.mp3'),
+    'swimming': require('@/assets/sports/fr/swimming.mp3'),
+    'tennis': require('@/assets/sports/fr/tennis.mp3'),
+    'volleyball': require('@/assets/sports/fr/volleyball.mp3'),
+    'water-polo': require('@/assets/sports/fr/waterpolo.mp3'),
+  },
   ar: {
     'baseball': require('@/assets/sports/ar/baseball.mp3'),
     'basketball': require('@/assets/sports/ar/basketball.mp3'),
@@ -499,8 +553,39 @@ const vehicleAudios: Record<Language, Record<string, number>> = {
     'submarine': require('@/assets/vehicles/en/submarine.mp3'),
     'train': require('@/assets/vehicles/en/train.mp3'),
     'yacht': require('@/assets/vehicles/en/yacht.mp3'),
+    'bulldozer': require('@/assets/construction/en/bulldozer.mp3'),
+    'crane': require('@/assets/construction/en/crane.mp3'),
+    'excavator': require('@/assets/construction/en/excavator.mp3'),
+    'forklift': require('@/assets/construction/en/forklift.mp3'),
+    'tractor': require('@/assets/construction/en/tractor.mp3'),
+    'truck': require('@/assets/construction/en/truck.mp3'),
   },
-  fr: {},
+  fr: {
+    'airplane': require('@/assets/vehicles/fr/airplane.mp3'),
+    'bicycle': require('@/assets/vehicles/fr/bicycle.mp3'),
+    'boat': require('@/assets/vehicles/fr/boat.mp3'),
+    'bus': require('@/assets/vehicles/fr/bus.mp3'),
+    'canoe': require('@/assets/vehicles/fr/canoe.mp3'),
+    'car': require('@/assets/vehicles/fr/car.mp3'),
+    'drone': require('@/assets/vehicles/fr/drone.mp3'),
+    'ferry': require('@/assets/vehicles/fr/ferry.mp3'),
+    'glider': require('@/assets/vehicles/fr/glider.mp3'),
+    'helicopter': require('@/assets/vehicles/fr/helicopter.mp3'),
+    'hot-air-balloon': require('@/assets/vehicles/fr/hotairballoon.mp3'),
+    'jet': require('@/assets/vehicles/fr/jet.mp3'),
+    'rocket': require('@/assets/vehicles/fr/rocket.mp3'),
+    'sailboat': require('@/assets/vehicles/fr/sailboat.mp3'),
+    'ship': require('@/assets/vehicles/fr/ship.mp3'),
+    'submarine': require('@/assets/vehicles/fr/submarine.mp3'),
+    'train': require('@/assets/vehicles/fr/train.mp3'),
+    'yacht': require('@/assets/vehicles/fr/yacht.mp3'),
+    'bulldozer': require('@/assets/construction/fr/bulldozer.mp3'),
+    'crane': require('@/assets/construction/fr/crane.mp3'),
+    'excavator': require('@/assets/construction/fr/excavator.mp3'),
+    'forklift': require('@/assets/construction/fr/forklift.mp3'),
+    'tractor': require('@/assets/construction/fr/tractor.mp3'),
+    'truck': require('@/assets/construction/fr/truck.mp3'),
+  },
   ar: {
     'airplane': require('@/assets/vehicles/ar/airplane.mp3'),
     'bicycle': require('@/assets/vehicles/ar/bicycle.mp3'),
@@ -520,6 +605,12 @@ const vehicleAudios: Record<Language, Record<string, number>> = {
     'submarine': require('@/assets/vehicles/ar/submarine.mp3'),
     'train': require('@/assets/vehicles/ar/train.mp3'),
     'yacht': require('@/assets/vehicles/ar/yacht.mp3'),
+    'bulldozer': require('@/assets/construction/ar/bulldozer.mp3'),
+    'crane': require('@/assets/construction/ar/crane.mp3'),
+    'excavator': require('@/assets/construction/ar/excavator.mp3'),
+    'forklift': require('@/assets/construction/ar/forklift.mp3'),
+    'tractor': require('@/assets/construction/ar/tractor.mp3'),
+    'truck': require('@/assets/construction/ar/truck.mp3'),
   },
 };
 
@@ -561,16 +652,6 @@ export const getColorAudio = (itemId: string, language: Language = 'en'): number
  */
 export const getShapeAudio = (itemId: string, language: Language = 'en'): number | undefined => {
   return shapeAudios[language]?.[itemId];
-};
-
-/**
- * Get the audio file for a construction item based on language
- * @param itemId - The item ID (e.g., 'bulldozer', 'crane', 'excavator')
- * @param language - The current language ('en', 'fr', 'ar')
- * @returns The require() result (number) for the audio file, or undefined if not found
- */
-export const getConstructionAudio = (itemId: string, language: Language = 'en'): number | undefined => {
-  return constructionAudios[language]?.[itemId];
 };
 
 /**
@@ -636,9 +717,6 @@ export const getItemAudio = (
   }
   if (category === 'shapes') {
     return getShapeAudio(itemId, language);
-  }
-  if (category === 'construction') {
-    return getConstructionAudio(itemId, language);
   }
   if (category === 'countries') {
     return getCountryAudio(itemId, language);

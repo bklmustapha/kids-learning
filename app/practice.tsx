@@ -61,7 +61,7 @@ export default function PracticeScreen() {
         
         // For categories with audio support, get language-specific audio
         if (level.category === 'numbers' || level.category === 'animals' || level.category === 'colors' || level.category === 'shapes' || 
-            level.category === 'construction' || level.category === 'countries' || level.category === 'fruits' || 
+            level.category === 'countries' || level.category === 'fruits' || 
             level.category === 'sports' || level.category === 'vehicles') {
           const languageAudio = getItemAudio(item.id, level.category, language as 'en' | 'fr' | 'ar');
           if (languageAudio) {
