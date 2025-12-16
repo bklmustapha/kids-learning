@@ -18,6 +18,7 @@ import { playSound, playSuccessSound, playErrorSound } from '@/utils/soundManage
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { saveProgress, getProgress } from '@/utils/storage';
+import { interstitialAdManager } from '@/utils/interstitialAd';
 import { getItemAudio } from '@/utils/audioAssets';
 import { getItemName, getLevelTitle } from '@/utils/translations';
 import { LearningItem, ChallengeQuestion } from '@/types';
@@ -202,6 +203,10 @@ export default function ChallengeScreen() {
       const starsEarned = score >= 4 ? 3 : score >= 3 ? 2 : 1;
       // Save progress before moving to reward
       saveCurrentProgress();
+      
+      // Show interstitial ad after challenge completion
+      interstitialAdManager.showAdAfterChallenge();
+      
       router.push({
         pathname: '/reward',
         params: { levelId, stars: starsEarned.toString(), score: score.toString() },

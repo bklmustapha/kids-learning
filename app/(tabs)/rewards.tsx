@@ -12,6 +12,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { getProgress } from '@/utils/storage';
 import { getLevelsByCategory } from '@/data/levels';
 import { UserProgress, Category } from '@/types';
+import BannerAd from '@/components/BannerAd';
 
 const badgeConfig = [
   { id: 'first-star', nameKey: 'badgeFirstStar', descKey: 'badgeDescFirstStar', icon: 'star' as keyof typeof Ionicons.glyphMap },
@@ -182,6 +183,9 @@ export default function RewardsScreen() {
             })}
           </View>
         </View>
+
+        {/* Banner Ad */}
+        <BannerAd style={{ marginTop: 20, marginBottom: 10 }} />
       </ScrollView>
     </View>
   );

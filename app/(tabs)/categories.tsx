@@ -14,6 +14,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { getProgress } from '@/utils/storage';
 import { getLevelsByCategory } from '@/data/levels';
 import { Category, UserProgress } from '@/types';
+import BannerAd from '@/components/BannerAd';
 
 const categories: { category: Category; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
   { category: 'animals', icon: 'paw', color: '#FF6B6B' },
@@ -115,6 +116,9 @@ export default function CategoriesScreen() {
             );
           })}
         </View>
+
+        {/* Banner Ad */}
+        <BannerAd style={{ marginTop: 20, marginBottom: 10 }} />
       </ScrollView>
     </View>
   );

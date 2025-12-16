@@ -9,11 +9,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#4A90E2"
     },
-    "extra": {
-      "eas": {
-        "projectId": "placeholder-project-id"
-      }
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -25,7 +20,10 @@
       "adaptiveIcon": {
         "backgroundColor": "#4A90E2"
       },
-      "package": "com.learnforkids.app"
+      "package": "com.learnforkids.app",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {},
     "plugins": [
@@ -35,8 +33,22 @@
         {
           "microphonePermission": false
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
       ]
     ],
-    "scheme": "learnforkids"
+    "scheme": "learnforkids",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2abe09de-7b2f-432c-bc19-7003d70c1dca"
+      }
+    },
+    "owner": "khalidbouhouch0"
   }
 }

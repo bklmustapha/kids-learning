@@ -16,6 +16,7 @@ import { getProgress } from '@/utils/storage';
 import { getLevelsByCategory, levels } from '@/data/levels';
 import { getLevelTitle } from '@/utils/translations';
 import { UserProgress, Category } from '@/types';
+import BannerAd from '@/components/BannerAd';
 
 const { width } = Dimensions.get('window');
 
@@ -183,6 +184,9 @@ export default function HomeScreen() {
             <Text style={styles.quickActionText}>{t('games')}</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Banner Ad */}
+        <BannerAd style={{ marginTop: 20, marginBottom: 10 }} />
       </ScrollView>
     </View>
   );

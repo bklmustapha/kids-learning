@@ -14,6 +14,7 @@ import { getLevelTitle } from '@/utils/translations';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { playSuccessSound } from '@/utils/soundManager';
 import { Category } from '@/types';
+import { interstitialAdManager } from '@/utils/interstitialAd';
 
 export default function RewardScreen() {
   const router = useRouter();
@@ -34,6 +35,14 @@ export default function RewardScreen() {
     loadLevel();
     animateRewards();
     playSuccessSound();
+    
+    // Show interstitial ad after level completion (with frequency control)
+    // Delay slightly to let the reward animation play first
+    const adTimer = setTimeout(() => {
+      interstitialAdManager.showAdAfterLevelCompletion();
+    }, 2000);
+    
+    return () => clearTimeout(adTimer);
   }, [language]);
 
   const loadLevel = () => {
