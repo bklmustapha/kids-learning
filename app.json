@@ -1,11 +1,13 @@
 {
   "expo": {
-    "name": "Learn for Kids",
+    "name": "Learn for Kids - تعلم للأطفال",
     "slug": "learn-for-kids",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/logo.png",
     "splash": {
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#4A90E2"
     },
@@ -18,6 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#4A90E2"
       },
       "package": "com.learnforkids.app",
