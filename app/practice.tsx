@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -77,22 +76,14 @@ export default function PracticeScreen() {
     }
   };
 
-  const handleExit = () => {
-    Alert.alert(
-      t('exit'),
-      'Are you sure you want to exit? Your progress will be saved.',
-      [
-        { text: t('back'), style: 'cancel' },
-        {
-          text: t('exit'),
-          style: 'destructive',
-          onPress: async () => {
-            await saveCurrentProgress();
-            router.back();
-          },
-        },
-      ]
-    );
+  const handleExit = async () => {
+    // Save progress and navigate directly to level-overview page
+    await saveCurrentProgress();
+    const level = getLevelById(levelId);
+    router.push({
+      pathname: '/level-overview',
+      params: { category: level?.category },
+    });
   };
 
   const saveCurrentProgress = async () => {

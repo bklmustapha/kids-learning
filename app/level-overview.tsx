@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, Link } from 'expo-router';
 import { LevelCard } from '@/components/LevelCard';
 import { getLevelsByCategory, getLevelById } from '@/data/levels';
 import { getProgress } from '@/utils/storage';
@@ -54,10 +54,6 @@ export default function LevelOverviewScreen() {
       pathname: '/learning',
       params: { levelId },
     });
-  };
-
-  const handleBack = () => {
-    router.back();
   };
 
   const getCategoryColor = (cat: Category): string => {
@@ -106,11 +102,9 @@ export default function LevelOverviewScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
-      {/* Header with Back Button */}
+      {/* Header without Back Button */}
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <Ionicons name={isRTL ? 'arrow-forward' : 'arrow-back'} size={24} color="#FFFFFF" />
-        </TouchableOpacity>
+        <View style={{ width: 40 }} />
         <View style={styles.headerTextContainer}>
           <Text style={styles.categoryTitle}>{getCategoryTitle(category)}</Text>
           <Text style={styles.subtitle}>{t('chooseLevel')}</Text>
@@ -121,7 +115,7 @@ export default function LevelOverviewScreen() {
       <ScrollView 
         style={styles.scrollView} 
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 + insets.bottom }}
+        contentContainerStyle={{ paddingBottom: 100 + insets.bottom }} // Extra padding for tabs
       >
         {/* Levels Grid */}
         <View style={styles.levelsContainer}>
@@ -146,6 +140,45 @@ export default function LevelOverviewScreen() {
           })}
         </View>
       </ScrollView>
+
+      {/* Custom Tab Bar */}
+      <View style={[styles.tabBar, { 
+        backgroundColor: colors.surface, 
+        borderTopColor: colors.border,
+        paddingBottom: Math.max(insets.bottom, 8),
+        height: 60 + insets.bottom,
+      }]}>
+        <Link href="/" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="home" size={24} color={colors.textSecondary} />
+            <Text style={[styles.tabLabel, { color: colors.textSecondary }]}>{t('home')}</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="/categories" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="library" size={24} color={colors.primary} />
+            <Text style={[styles.tabLabel, { color: colors.primary }]}>{t('categories')}</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="/rewards" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="trophy" size={24} color={colors.textSecondary} />
+            <Text style={[styles.tabLabel, { color: colors.textSecondary }]}>{t('rewards')}</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="/games" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="game-controller" size={24} color={colors.textSecondary} />
+            <Text style={[styles.tabLabel, { color: colors.textSecondary }]}>{t('games')}</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="/settings" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="settings" size={24} color={colors.textSecondary} />
+            <Text style={[styles.tabLabel, { color: colors.textSecondary }]}>{t('settings')}</Text>
+          </TouchableOpacity>
+        </Link>
+      </View>
     </View>
   );
 }
@@ -164,9 +197,6 @@ function createStyles(colors: any, isRTL: boolean) {
       paddingHorizontal: 16,
       borderBottomLeftRadius: 30,
       borderBottomRightRadius: 30,
-    },
-    backButton: {
-      padding: 8,
     },
     headerTextContainer: {
       flex: 1,
@@ -192,6 +222,28 @@ function createStyles(colors: any, isRTL: boolean) {
       flexDirection: 'row',
       flexWrap: 'wrap',
       paddingHorizontal: 8,
+    },
+    tabBar: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      flexDirection: 'row',
+      borderTopWidth: 1,
+      paddingTop: 8,
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    },
+    tabItem: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 4,
+    },
+    tabLabel: {
+      fontSize: 12,
+      fontWeight: '600',
+      marginTop: 4,
     },
   });
 }

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -56,26 +55,44 @@ export default function ChallengeScreen() {
       hasPlayedInitialAudioRef.current = false;
     }
     
+    // Reset audio flags when level changes
+    hasPlayedInitialAudioRef.current = false;
+    setCurrentQuestion(0);
+    
     loadLevel();
   }, [levelId, language]);
 
-  // Auto-play first question audio when questions are loaded
+  // Auto-play question audio when questions are loaded or question changes
   useEffect(() => {
-    if (questions.length > 0 && currentQuestion === 0 && !hasPlayedInitialAudioRef.current) {
-      if (!skipNextAudioRef.current) {
-        const question = questions[0];
-        if (question.audio) {
+    if (questions.length === 0) return;
+    
+    const question = questions[currentQuestion];
+    if (!question || !question.audio) return;
+
+    // For the first question, check if we should skip (language change)
+    if (currentQuestion === 0) {
+      if (!hasPlayedInitialAudioRef.current && !skipNextAudioRef.current) {
+        // Play first question audio with a small delay
+        const timer = setTimeout(() => {
           if (typeof question.audio === 'number') {
             playSound(question.audio);
           } else {
             playSound(undefined, question.audio);
           }
-        }
-        hasPlayedInitialAudioRef.current = true;
-      } else {
-        // Reset the flag after skipping once
+          hasPlayedInitialAudioRef.current = true;
+        }, 200);
+        return () => clearTimeout(timer);
+      } else if (skipNextAudioRef.current) {
+        // Reset the flag after skipping once (language change)
         skipNextAudioRef.current = false;
         hasPlayedInitialAudioRef.current = true;
+      }
+    } else {
+      // Auto-play audio for subsequent questions
+      if (typeof question.audio === 'number') {
+        playSound(question.audio);
+      } else {
+        playSound(undefined, question.audio);
       }
     }
   }, [questions, currentQuestion]);
@@ -109,22 +126,14 @@ export default function ChallengeScreen() {
     }
   };
 
-  const handleExit = () => {
-    Alert.alert(
-      t('exit'),
-      'Are you sure you want to exit? Your progress will be saved.',
-      [
-        { text: t('back'), style: 'cancel' },
-        {
-          text: t('exit'),
-          style: 'destructive',
-          onPress: async () => {
-            await saveCurrentProgress();
-            router.back();
-          },
-        },
-      ]
-    );
+  const handleExit = async () => {
+    // Save progress and navigate directly to level-overview page
+    await saveCurrentProgress();
+    // Navigate to level-overview instead of going back
+    router.push({
+      pathname: '/level-overview',
+      params: { category: getLevelById(levelId)?.category },
+    });
   };
 
   const saveCurrentProgress = async () => {
@@ -185,17 +194,32 @@ export default function ChallengeScreen() {
         shuffledOptions.splice(randomPosition, 0, randomItem);
       }
       
-      // Map to IDs
-      const optionIds = shuffledOptions.map(item => item.id);
+      // Map to IDs - ensure all IDs are strings for consistent comparison
+      const optionIds = shuffledOptions.map(item => String(item.id));
+      const correctAnswerId = String(randomItem.id);
       
-      // Final verification
-      if (!optionIds.includes(randomItem.id)) {
+      // Final verification - check with string comparison
+      if (!optionIds.includes(correctAnswerId)) {
         console.error('CRITICAL: Correct answer still missing in optionIds!', {
-          correctAnswer: randomItem.id,
+          correctAnswer: correctAnswerId,
           optionIds,
+          shuffledOptions: shuffledOptions.map(i => ({ id: i.id, name: i.name })),
         });
         // Last resort: replace first option with correct answer
-        optionIds[0] = randomItem.id;
+        optionIds[0] = correctAnswerId;
+      }
+      
+      // Ensure we have at least 2 options (correct answer + at least one wrong)
+      if (optionIds.length < 2) {
+        console.error('Not enough options! Adding more wrong options.', {
+          currentOptions: optionIds,
+          availableItems: levelItems.map(i => i.id),
+        });
+        // Add more wrong options if needed
+        const additionalWrong = availableWrongOptions
+          .filter(item => !optionIds.includes(String(item.id)))
+          .slice(0, 3 - optionIds.length);
+        optionIds.push(...additionalWrong.map(item => String(item.id)));
       }
 
       // Use the item's sound (language-specific) if available, otherwise use pronunciation
@@ -207,31 +231,65 @@ export default function ChallengeScreen() {
         question: type === 'multiple-choice' 
           ? `${t('whichOne')} ${randomItem.name}?`
           : `${t('tapThe')} ${randomItem.name}!`,
-        correctAnswer: randomItem.id,
+        correctAnswer: String(randomItem.id), // Ensure correctAnswer is always a string
         options: optionIds,
         audio: audioSource,
       };
     });
 
     // Verify all questions have valid options before setting
-    const validQuestions = generatedQuestions.filter(q => {
-      if (!q.options || q.options.length === 0) {
-        console.error('Question has no options:', q);
-        return false;
+    const validQuestions: ChallengeQuestion[] = generatedQuestions.map((q, idx) => {
+      // Ensure all IDs are strings for comparison
+      const correctAnswerStr = String(q.correctAnswer);
+      const optionsStr = (q.options || []).map(opt => String(opt));
+      
+      // Check if correct answer is in options
+      if (!optionsStr.includes(correctAnswerStr)) {
+        console.error(`Question ${idx} missing correct answer! Adding it.`, {
+          question: q.question,
+          correctAnswer: correctAnswerStr,
+          options: optionsStr,
+        });
+        // Force add correct answer if missing
+        optionsStr[0] = correctAnswerStr;
       }
-      const hasCorrectAnswer = q.options.includes(String(q.correctAnswer));
-      const hasEnoughOptions = q.options.length >= 2;
-      if (!hasCorrectAnswer || !hasEnoughOptions) {
-        console.error('Invalid question generated:', q);
+      
+      // Ensure minimum 2 options
+      if (optionsStr.length < 2) {
+        console.error(`Question ${idx} has less than 2 options!`, {
+          question: q.question,
+          options: optionsStr,
+        });
+        // Add more options if needed (shouldn't happen, but safety check)
+        const level = getLevelById(levelId);
+        if (level) {
+          const additionalOptions = level.items
+            .filter(item => !optionsStr.includes(String(item.id)))
+            .slice(0, 2 - optionsStr.length)
+            .map(item => String(item.id));
+          optionsStr.push(...additionalOptions);
+        }
       }
-      return hasCorrectAnswer && hasEnoughOptions;
-    });
+      
+      return {
+        ...q,
+        correctAnswer: correctAnswerStr as string | number, // Keep as original type for compatibility
+        options: optionsStr,
+      } as ChallengeQuestion;
+    }).filter((q) => {
+      // Final validation filter
+      if (!q.options || q.options.length < 2) return false;
+      const correctAnswerStr = String(q.correctAnswer);
+      return q.options.includes(correctAnswerStr);
+    }) as ChallengeQuestion[];
 
     if (validQuestions.length !== generatedQuestions.length) {
       console.warn(`Generated ${generatedQuestions.length} questions but only ${validQuestions.length} are valid`);
     }
 
     setQuestions(validQuestions);
+    // Reset audio flag when new questions are generated
+    hasPlayedInitialAudioRef.current = false;
   };
 
   const handleAnswer = async (answerId: string) => {

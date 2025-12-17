@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
-  Alert,
   I18nManager,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -98,23 +97,14 @@ export default function LearningScreen() {
     await playSound(item.sound, item.pronunciation || item.name);
   };
 
-  const handleExit = () => {
-    Alert.alert(
-      t('exit'),
-      'Are you sure you want to exit? Your progress will be saved.',
-      [
-        { text: t('back'), style: 'cancel' },
-        {
-          text: t('exit'),
-          style: 'destructive',
-          onPress: async () => {
-            // Save current progress
-            await saveCurrentProgress();
-            router.back();
-          },
-        },
-      ]
-    );
+  const handleExit = async () => {
+    // Save progress and navigate directly to level-overview page
+    await saveCurrentProgress();
+    const level = getLevelById(levelId);
+    router.push({
+      pathname: '/level-overview',
+      params: { category: level?.category },
+    });
   };
 
   const saveCurrentProgress = async () => {
