@@ -103,8 +103,13 @@ export default function SettingsScreen() {
   };
 
   const handlePrivacyPolicy = () => {
-    // In a real app, this would open a privacy policy page
-    Alert.alert(t('privacy'), 'Privacy Policy content would go here.');
+    const message =
+      'Learn for Kids stores progress, badges, and language settings locally on your device. ' +
+      'We do not collect personal information like name, email, or precise location. ' +
+      'Ads are served via Google AdMob, which may collect device identifiers for ad delivery and frequency capping. ' +
+      'Audio and media are used only to play learning content you select. ' +
+      'You can clear local progress anytime from Settings (Reset All Progress).';
+    Alert.alert(t('privacy'), message, [{ text: 'OK' }]);
   };
 
   const handleAbout = () => {
