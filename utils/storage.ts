@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserProgress, Category } from '@/types';
 
 const STORAGE_KEYS = {
-  PROGRESS: '@learnforkids:progress',
-  SETTINGS: '@learnforkids:settings',
-  ONBOARDING_COMPLETED: '@learnforkids:onboarding_completed',
+  PROGRESS: '@mustaphabkl.kidslearning:progress',
+  SETTINGS: '@mustaphabkl.kidslearning:settings',
+  ONBOARDING_COMPLETED: '@mustaphabkl.kidslearning:onboarding_completed',
 };
 
 export const getDefaultProgress = (): UserProgress => {
@@ -39,15 +39,24 @@ export const getProgress = async (): Promise<UserProgress | null> => {
     const data = await AsyncStorage.getItem(STORAGE_KEYS.PROGRESS);
     if (data) {
       const progress = JSON.parse(data);
-      // Ensure levelStars exists for backward compatibility
-      if (!progress.levelStars) {
-        progress.levelStars = {};
+      // Validate that parsed data has expected structure
+      if (progress && typeof progress === 'object') {
+        // Ensure levelStars exists for backward compatibility
+        if (!progress.levelStars) {
+          progress.levelStars = {};
+        }
+        return progress;
       }
-      return progress;
     }
     return null;
   } catch (error) {
     console.error('Error getting progress:', error);
+    // If JSON is corrupted, try to remove it
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEYS.PROGRESS);
+    } catch (removeError) {
+      console.error('Error removing corrupted progress:', removeError);
+    }
     return null;
   }
 };
@@ -64,10 +73,20 @@ export const getSettings = async (): Promise<AppSettings> => {
   try {
     const data = await AsyncStorage.getItem(STORAGE_KEYS.SETTINGS);
     if (data) {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      // Validate that parsed data has expected structure
+      if (parsed && typeof parsed === 'object') {
+        return parsed;
+      }
     }
   } catch (error) {
     console.error('Error getting settings:', error);
+    // If JSON is corrupted, try to remove it
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEYS.SETTINGS);
+    } catch (removeError) {
+      console.error('Error removing corrupted settings:', removeError);
+    }
   }
   // Default settings
   return {

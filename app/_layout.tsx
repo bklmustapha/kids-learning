@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { initializeSoundManager } from '@/utils/soundManager';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 function RootStack() {
   const { isRTL } = useLanguage();
@@ -44,15 +45,17 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <SafeAreaProvider>
-        <ThemeProvider>
-          <LanguageProvider>
-            <RootStack />
-          </LanguageProvider>
-        </ThemeProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <ErrorBoundary>
+      <GestureHandlerRootView style={styles.container}>
+        <SafeAreaProvider>
+          <ThemeProvider>
+            <LanguageProvider>
+              <RootStack />
+            </LanguageProvider>
+          </ThemeProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
   );
 }
 
