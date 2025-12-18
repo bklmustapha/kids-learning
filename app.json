@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "Learn for Kids - تعلم للأطفال",
-    "slug": "learn-for-kids",
+    "name": "Kids Learning",
+    "slug": "kids-learning",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#4A90E2"
     },
@@ -16,14 +16,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.learnforkids.app"
+      "bundleIdentifier": "com.mustaphabkl.kidslearning",
+      "buildNumber": "1",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#4A90E2"
       },
-      "package": "com.learnforkids.app",
+      "package": "com.mustaphabkl.kidslearning",
       "permissions": [
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
@@ -45,13 +47,12 @@
         }
       ]
     ],
-    "scheme": "learnforkids",
+    "scheme": "kidslearning",
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "2abe09de-7b2f-432c-bc19-7003d70c1dca"
+        "projectId": "e15bfc20-a0f0-4bd5-8cb2-8200e8163cd5"
       }
-    },
-    "owner": "khalidbouhouch0"
+    }
   }
 }

@@ -85,6 +85,12 @@ export const playSound = async (soundFile?: string | number, textToSpeak?: strin
         }
       );
       
+      // Validate sound was created successfully
+      if (!sound) {
+        console.error('Sound object is null or undefined');
+        return;
+      }
+      
       // Wait for sound to finish before unloading
       await new Promise<void>((resolve) => {
         let resolved = false;
@@ -115,7 +121,18 @@ export const playSound = async (soundFile?: string | number, textToSpeak?: strin
         }, 8000); // Increased from 5000 to 8000 for slower devices
       });
       
-      await sound.unloadAsync();
+      // Safely unload sound - wrap in try-catch to prevent crashes
+      try {
+        if (sound) {
+          const status = await sound.getStatusAsync();
+          if (status.isLoaded) {
+            await sound.unloadAsync();
+          }
+        }
+      } catch (unloadError) {
+        console.error('Error unloading sound:', unloadError);
+        // Don't throw - this is cleanup, failure is non-critical
+      }
     } else if (textToSpeak) {
       // Only log if no audio file is available
       console.log('No audio file available for:', textToSpeak);
