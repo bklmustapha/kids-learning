@@ -115,7 +115,7 @@ export default function SettingsScreen() {
   const handleAbout = () => {
     Alert.alert(
       t('about'),
-      'تحدي - درب عقلك\nVersion 1.5.0\n\nAn educational app to learn animals, numbers, colors, shapes, countries, fruits, sports, and vehicles through interactive games and challenges.',
+      'تحدي - درب عقلك\nVersion 1.4.1\n\nAn educational app to learn animals, numbers, colors, shapes, countries, fruits, sports, and vehicles through interactive games and challenges.',
       [{ text: 'OK' }]
     );
   };
