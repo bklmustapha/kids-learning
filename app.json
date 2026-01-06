@@ -2,7 +2,7 @@
   "expo": {
     "name": "tahadi learning",
     "slug": "kids-learning",
-    "version": "1.4.1",
+    "version": "1.5.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
